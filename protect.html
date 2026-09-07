@@ -1,0 +1,3853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Protect Payment | UPI-Shield</title>
+
+    <meta
+        name="description"
+        content="UPI-Shield protects users from contextual digital payment scams by analyzing suspicious payment situations before authorization."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =========================================================
+           UPI-SHIELD
+           PROTECT PAYMENT
+           Premium Neumorphic Fintech Interface
+        ========================================================= */
+
+        :root {
+
+            --bg: #e9f0f7;
+
+            --primary: #1769e0;
+            --primary-dark: #0d4fae;
+            --primary-light: #4d91f5;
+
+            --cyan: #08a9d6;
+
+            --success: #15966b;
+            --warning: #df8b31;
+            --danger: #d94b55;
+
+            --text: #12263a;
+            --muted: #62798d;
+            --soft-text: #8093a4;
+
+            --white: #ffffff;
+
+            --dark-shadow:
+                rgba(163, 177, 198, 0.62);
+
+            --light-shadow:
+                rgba(255, 255, 255, 0.96);
+
+            --raised:
+                10px 10px 22px var(--dark-shadow),
+                -10px -10px 22px var(--light-shadow);
+
+            --raised-small:
+                6px 6px 14px rgba(163,177,198,.55),
+                -6px -6px 14px rgba(255,255,255,.92);
+
+            --inset:
+                inset 6px 6px 13px rgba(163,177,198,.48),
+                inset -6px -6px 13px rgba(255,255,255,.92);
+
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family: "Inter", sans-serif;
+
+            background:
+                var(--bg);
+
+            color:
+                var(--text);
+
+            overflow-x:
+                hidden;
+        }
+
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            top: -230px;
+            right: -130px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(77,145,245,.11),
+                    transparent 67%
+                );
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 380px;
+            height: 380px;
+
+            bottom: -200px;
+            left: -130px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(8,169,214,.08),
+                    transparent 67%
+                );
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+
+            position: fixed;
+
+            top: 18px;
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width:
+                min(
+                    1180px,
+                    calc(100% - 36px)
+                );
+
+            height: 72px;
+
+            padding:
+                0 22px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            border-radius:
+                22px;
+
+            background:
+                rgba(233,240,247,.90);
+
+            backdrop-filter:
+                blur(18px);
+
+            box-shadow:
+                var(--raised-small);
+
+            z-index:
+                1000;
+        }
+
+
+        .brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            font-weight:
+                800;
+        }
+
+
+        .brand-logo {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                13px;
+
+            color:
+                var(--primary);
+
+            box-shadow:
+                var(--raised-small);
+
+            font-size:
+                18px;
+
+            font-weight:
+                800;
+        }
+
+
+        .brand-text {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            line-height:
+                1.1;
+        }
+
+
+        .brand-name {
+            font-size:
+                15px;
+        }
+
+
+        .brand-tag {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+
+            letter-spacing:
+                1.3px;
+
+            text-transform:
+                uppercase;
+        }
+
+
+        .nav-links {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+        }
+
+
+        .nav-links a {
+
+            padding:
+                11px 13px;
+
+            border-radius:
+                12px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+
+            font-weight:
+                600;
+
+            transition:
+                .25s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color:
+                var(--primary);
+
+            background:
+                rgba(255,255,255,.35);
+
+            box-shadow:
+                var(--raised-small);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .nav-links a.active {
+
+            color:
+                var(--primary);
+
+            background:
+                rgba(255,255,255,.4);
+
+            box-shadow:
+                var(--inset);
+        }
+
+
+        .nav-cta {
+
+            color:
+                white !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-light)
+                ) !important;
+
+            box-shadow:
+                5px 5px 12px
+                rgba(13,79,174,.25),
+
+                -4px -4px 10px
+                rgba(255,255,255,.7) !important;
+        }
+
+
+        .menu-btn {
+
+            display:
+                none;
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            border:
+                none;
+
+            border-radius:
+                12px;
+
+            background:
+                var(--bg);
+
+            color:
+                var(--primary);
+
+            box-shadow:
+                var(--raised-small);
+
+            cursor:
+                pointer;
+
+            font-size:
+                20px;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+
+            min-height:
+                92vh;
+
+            padding:
+                155px 7% 80px;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                .85fr 1.15fr;
+
+            align-items:
+                center;
+
+            gap:
+                70px;
+        }
+
+
+        .hero-copy {
+
+            max-width:
+                610px;
+        }
+
+
+        .eyebrow {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                9px 14px;
+
+            border-radius:
+                50px;
+
+            color:
+                var(--primary);
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                .8px;
+
+            box-shadow:
+                var(--inset);
+        }
+
+
+        .status-dot {
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--success);
+
+            animation:
+                livePulse 1.7s infinite;
+        }
+
+
+        @keyframes livePulse {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 0 0 0
+                    rgba(21,150,107,.22);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 0 7px
+                    rgba(21,150,107,0);
+            }
+        }
+
+
+        .hero h1 {
+
+            margin-top:
+                25px;
+
+            font-size:
+                clamp(
+                    42px,
+                    5vw,
+                    70px
+                );
+
+            line-height:
+                1.02;
+
+            letter-spacing:
+                -3.5px;
+        }
+
+
+        .hero h1 span {
+            color:
+                var(--primary);
+        }
+
+
+        .hero-description {
+
+            max-width:
+                590px;
+
+            margin-top:
+                23px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                14px;
+
+            line-height:
+                1.85;
+        }
+
+
+        .hero-points {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                10px;
+
+            margin-top:
+                25px;
+        }
+
+
+        .hero-point {
+
+            padding:
+                9px 12px;
+
+            border-radius:
+                10px;
+
+            color:
+                var(--muted);
+
+            background:
+                rgba(255,255,255,.18);
+
+            box-shadow:
+                var(--raised-small);
+
+            font-size:
+                9px;
+
+            font-weight:
+                700;
+        }
+
+
+        /* =========================================================
+           PROTECTION CONSOLE
+        ========================================================= */
+
+        .protection-console {
+
+            padding:
+                25px;
+
+            border-radius:
+                30px;
+
+            box-shadow:
+                var(--raised);
+        }
+
+
+        .console-top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            padding-bottom:
+                20px;
+
+            border-bottom:
+                1px solid
+                rgba(98,121,141,.08);
+        }
+
+
+        .console-title {
+
+            font-size:
+                13px;
+
+            font-weight:
+                800;
+        }
+
+
+        .console-status {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            padding:
+                7px 10px;
+
+            border-radius:
+                50px;
+
+            color:
+                var(--success);
+
+            background:
+                rgba(21,150,107,.08);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+        }
+
+
+        .console-body {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                22px;
+
+            margin-top:
+                22px;
+        }
+
+
+        /* =========================================================
+           TRANSACTION CARD
+        ========================================================= */
+
+        .transaction-card {
+
+            padding:
+                20px;
+
+            border-radius:
+                21px;
+
+            box-shadow:
+                var(--inset);
+        }
+
+
+        .card-label {
+
+            color:
+                var(--soft-text);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1px;
+
+            text-transform:
+                uppercase;
+        }
+
+
+        .recipient {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            margin-top:
+                17px;
+        }
+
+
+        .recipient-avatar {
+
+            width:
+                43px;
+
+            height:
+                43px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                14px;
+
+            color:
+                var(--primary);
+
+            background:
+                var(--bg);
+
+            box-shadow:
+                var(--raised-small);
+
+            font-weight:
+                800;
+        }
+
+
+        .recipient-name {
+
+            font-size:
+                12px;
+
+            font-weight:
+                800;
+        }
+
+
+        .recipient-id {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+        }
+
+
+        .amount {
+
+            margin-top:
+                23px;
+
+            font-size:
+                32px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                -1.5px;
+        }
+
+
+        .amount span {
+
+            margin-right:
+                3px;
+
+            color:
+                var(--primary);
+
+            font-size:
+                19px;
+        }
+
+
+        .transaction-meta {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                9px;
+
+            margin-top:
+                18px;
+        }
+
+
+        .meta {
+
+            padding:
+                10px;
+
+            border-radius:
+                11px;
+
+            box-shadow:
+                var(--raised-small);
+        }
+
+
+        .meta span {
+
+            display:
+                block;
+
+            color:
+                var(--soft-text);
+
+            font-size:
+                7px;
+        }
+
+
+        .meta strong {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            font-size:
+                9px;
+        }
+
+
+        /* =========================================================
+           RISK PANEL
+        ========================================================= */
+
+        .risk-panel {
+
+            padding:
+                20px;
+
+            border-radius:
+                21px;
+
+            box-shadow:
+                var(--raised-small);
+        }
+
+
+        .risk-header {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+        }
+
+
+        .risk-header strong {
+
+            font-size:
+                12px;
+        }
+
+
+        .analyzing {
+
+            color:
+                var(--primary);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+            animation:
+                blink 1.4s infinite;
+        }
+
+
+        @keyframes blink {
+
+            50% {
+                opacity:
+                    .35;
+            }
+        }
+
+
+        .risk-meter {
+
+            position:
+                relative;
+
+            width:
+                165px;
+
+            height:
+                165px;
+
+            margin:
+                25px auto;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                conic-gradient(
+                    var(--primary)
+                    0deg,
+                    var(--primary-light)
+                    327deg,
+                    rgba(23,105,224,.08)
+                    327deg
+                );
+
+            box-shadow:
+                var(--raised-small);
+        }
+
+
+        .risk-meter::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                124px;
+
+            height:
+                124px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--bg);
+
+            box-shadow:
+                var(--inset);
+        }
+
+
+        .risk-value {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            text-align:
+                center;
+        }
+
+
+        .risk-number {
+
+            font-size:
+                34px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                -2px;
+
+            color:
+                var(--danger);
+        }
+
+
+        .risk-label {
+
+            margin-top:
+                2px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+        }
+
+
+        .risk-level {
+
+            display:
+                block;
+
+            width:
+                max-content;
+
+            margin:
+                0 auto;
+
+            padding:
+                7px 11px;
+
+            border-radius:
+                50px;
+
+            color:
+                var(--danger);
+
+            background:
+                rgba(217,75,85,.08);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+        }
+
+
+        /* =========================================================
+           CHECKS
+        ========================================================= */
+
+        .checks {
+
+            margin-top:
+                17px;
+
+            display:
+                grid;
+
+            gap:
+                8px;
+        }
+
+
+        .check {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                9px 10px;
+
+            border-radius:
+                10px;
+
+            background:
+                rgba(255,255,255,.15);
+        }
+
+
+        .check-left {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+        }
+
+
+        .check-icon {
+
+            width:
+                21px;
+
+            height:
+                21px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                7px;
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+        }
+
+
+        .check-icon.safe {
+
+            color:
+                var(--success);
+
+            background:
+                rgba(21,150,107,.08);
+        }
+
+
+        .check-icon.warning {
+
+            color:
+                var(--warning);
+
+            background:
+                rgba(223,139,49,.09);
+        }
+
+
+        .check-icon.danger {
+
+            color:
+                var(--danger);
+
+            background:
+                rgba(217,75,85,.08);
+        }
+
+
+        .check span {
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+        }
+
+
+        .check-result {
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+        }
+
+
+        .check-result.good {
+            color:
+                var(--success);
+        }
+
+
+        .check-result.bad {
+            color:
+                var(--danger);
+        }
+
+
+        /* =========================================================
+           ACTION BAR
+        ========================================================= */
+
+        .action-bar {
+
+            margin-top:
+                20px;
+
+            display:
+                flex;
+
+            gap:
+                9px;
+        }
+
+
+        .action {
+
+            flex:
+                1;
+
+            min-height:
+                43px;
+
+            border:
+                none;
+
+            border-radius:
+                12px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                9px;
+
+            font-weight:
+                800;
+
+            transition:
+                .25s ease;
+        }
+
+
+        .action:hover {
+            transform:
+                translateY(-2px);
+        }
+
+
+        .verify-btn {
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-light)
+                );
+
+            box-shadow:
+                5px 5px 12px
+                rgba(13,79,174,.22),
+
+                -4px -4px 10px
+                rgba(255,255,255,.7);
+        }
+
+
+        .cancel-btn {
+
+            color:
+                var(--danger);
+
+            background:
+                var(--bg);
+
+            box-shadow:
+                var(--raised-small);
+        }
+
+
+        /* =========================================================
+           PROTECTION STATUS
+        ========================================================= */
+
+        .protection-status {
+
+            margin-top:
+                22px;
+
+            padding:
+                14px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+            border-radius:
+                15px;
+
+            background:
+                rgba(217,75,85,.055);
+
+            border:
+                1px solid
+                rgba(217,75,85,.09);
+        }
+
+
+        .status-icon {
+
+            width:
+                32px;
+
+            height:
+                32px;
+
+            flex:
+                0 0 32px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                10px;
+
+            color:
+                var(--danger);
+
+            background:
+                var(--bg);
+
+            box-shadow:
+                var(--raised-small);
+
+            font-weight:
+                800;
+        }
+
+
+        .status-text strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+            color:
+                var(--danger);
+        }
+
+
+        .status-text span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.5;
+        }
+
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        section {
+
+            padding:
+                100px 7%;
+        }
+
+
+        .section-heading {
+
+            max-width:
+                720px;
+
+            margin-bottom:
+                50px;
+        }
+
+
+        .section-kicker {
+
+            color:
+                var(--primary);
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1.5px;
+
+            text-transform:
+                uppercase;
+        }
+
+
+        .section-heading h2 {
+
+            margin-top:
+                13px;
+
+            font-size:
+                clamp(
+                    31px,
+                    4vw,
+                    48px
+                );
+
+            line-height:
+                1.08;
+
+            letter-spacing:
+                -2px;
+        }
+
+
+        .section-heading p {
+
+            margin-top:
+                16px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.8;
+        }
+
+
+        /* =========================================================
+           PROTECTION PROCESS
+        ========================================================= */
+
+        .process-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap:
+                18px;
+        }
+
+
+        .process-card {
+
+            position:
+                relative;
+
+            min-height:
+                230px;
+
+            padding:
+                25px;
+
+            border-radius:
+                22px;
+
+            box-shadow:
+                var(--raised-small);
+
+            transition:
+                .3s ease;
+        }
+
+
+        .process-card:hover {
+
+            transform:
+                translateY(-8px);
+
+            box-shadow:
+                var(--raised);
+        }
+
+
+        .process-number {
+
+            color:
+                var(--primary);
+
+            font-size:
+                9px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1px;
+        }
+
+
+        .process-icon {
+
+            width:
+                48px;
+
+            height:
+                48px;
+
+            margin:
+                20px 0;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                14px;
+
+            color:
+                var(--primary);
+
+            box-shadow:
+                var(--inset);
+
+            font-size:
+                12px;
+
+            font-weight:
+                800;
+        }
+
+
+        .process-card h3 {
+
+            font-size:
+                14px;
+        }
+
+
+        .process-card p {
+
+            margin-top:
+                9px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+        }
+
+
+        /* =========================================================
+           VERIFY SECTION
+        ========================================================= */
+
+        .verify-section {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                65px;
+
+            align-items:
+                center;
+        }
+
+
+        .verify-copy h2 {
+
+            margin-top:
+                13px;
+
+            font-size:
+                clamp(
+                    31px,
+                    4vw,
+                    48px
+                );
+
+            line-height:
+                1.08;
+
+            letter-spacing:
+                -2px;
+        }
+
+
+        .verify-copy h2 span {
+            color:
+                var(--primary);
+        }
+
+
+        .verify-copy > p {
+
+            margin-top:
+                18px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.85;
+        }
+
+
+        .verification-panel {
+
+            padding:
+                28px;
+
+            border-radius:
+                27px;
+
+            box-shadow:
+                var(--raised);
+        }
+
+
+        .verification-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .verification-header strong {
+            font-size:
+                13px;
+        }
+
+
+        .verified-badge {
+
+            padding:
+                6px 9px;
+
+            border-radius:
+                50px;
+
+            color:
+                var(--success);
+
+            background:
+                rgba(21,150,107,.08);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+        }
+
+
+        .verification-row {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                13px 0;
+
+            border-bottom:
+                1px solid
+                rgba(98,121,141,.08);
+        }
+
+
+        .verification-row:last-child {
+            border-bottom:
+                none;
+        }
+
+
+        .verification-left {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+        }
+
+
+        .verification-icon {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                10px;
+
+            box-shadow:
+                var(--inset);
+
+            color:
+                var(--primary);
+
+            font-size:
+                9px;
+
+            font-weight:
+                800;
+        }
+
+
+        .verification-left strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+        }
+
+
+        .verification-left small {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                7px;
+        }
+
+
+        .verification-result {
+
+            padding:
+                5px 8px;
+
+            border-radius:
+                7px;
+
+            color:
+                var(--success);
+
+            background:
+                rgba(21,150,107,.08);
+
+            font-size:
+                7px;
+
+            font-weight:
+                800;
+        }
+
+
+        /* =========================================================
+           SAFETY TIPS
+        ========================================================= */
+
+        .tips-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap:
+                18px;
+        }
+
+
+        .tip {
+
+            padding:
+                25px;
+
+            border-radius:
+                21px;
+
+            box-shadow:
+                var(--raised-small);
+
+            transition:
+                .3s ease;
+        }
+
+
+        .tip:hover {
+            transform:
+                translateY(-6px);
+        }
+
+
+        .tip-number {
+
+            width:
+                31px;
+
+            height:
+                31px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                9px;
+
+            color:
+                var(--primary);
+
+            box-shadow:
+                var(--inset);
+
+            font-size:
+                9px;
+
+            font-weight:
+                800;
+        }
+
+
+        .tip h3 {
+
+            margin-top:
+                19px;
+
+            font-size:
+                13px;
+        }
+
+
+        .tip p {
+
+            margin-top:
+                9px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+        }
+
+
+        /* =========================================================
+           FINAL CTA
+        ========================================================= */
+
+        .cta {
+
+            padding-top:
+                50px;
+
+            padding-bottom:
+                120px;
+        }
+
+
+        .cta-card {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            padding:
+                65px;
+
+            border-radius:
+                32px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(23,105,224,.97),
+                    rgba(77,145,245,.94)
+                );
+
+            box-shadow:
+                15px 15px 35px
+                rgba(13,79,174,.25),
+
+                -10px -10px 25px
+                rgba(255,255,255,.75);
+        }
+
+
+        .cta-card::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                330px;
+
+            height:
+                330px;
+
+            top:
+                -190px;
+
+            right:
+                -100px;
+
+            border:
+                50px solid
+                rgba(255,255,255,.08);
+
+            border-radius:
+                50%;
+        }
+
+
+        .cta-card h2 {
+
+            position:
+                relative;
+
+            max-width:
+                700px;
+
+            font-size:
+                clamp(
+                    30px,
+                    4vw,
+                    48px
+                );
+
+            line-height:
+                1.08;
+
+            letter-spacing:
+                -2px;
+        }
+
+
+        .cta-card p {
+
+            position:
+                relative;
+
+            max-width:
+                630px;
+
+            margin-top:
+                17px;
+
+            color:
+                rgba(255,255,255,.78);
+
+            font-size:
+                12px;
+
+            line-height:
+                1.75;
+        }
+
+
+        .cta-card .btn {
+
+            position:
+                relative;
+
+            display:
+                inline-flex;
+
+            margin-top:
+                28px;
+
+            min-height:
+                46px;
+
+            padding:
+                0 20px;
+
+            align-items:
+                center;
+
+            border:
+                none;
+
+            border-radius:
+                13px;
+
+            background:
+                white;
+
+            color:
+                var(--primary);
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+            transition:
+                .25s ease;
+        }
+
+
+        .cta-card .btn:hover {
+            transform:
+                translateY(-3px);
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+
+            padding:
+                35px 7%
+                45px;
+
+            border-top:
+                1px solid
+                rgba(98,121,141,.08);
+        }
+
+
+        .footer-inner {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                20px;
+        }
+
+
+        .footer-brand {
+
+            font-size:
+                13px;
+
+            font-weight:
+                800;
+        }
+
+
+        .footer-copy {
+
+            margin-top:
+                6px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+        }
+
+
+        .footer-links {
+
+            display:
+                flex;
+
+            gap:
+                17px;
+
+            flex-wrap:
+                wrap;
+        }
+
+
+        .footer-links a {
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+
+            transition:
+                .2s;
+        }
+
+
+        .footer-links a:hover {
+            color:
+                var(--primary);
+        }
+
+
+        /* =========================================================
+           REVEAL ANIMATION
+        ========================================================= */
+
+        .reveal {
+
+            opacity:
+                0;
+
+            transform:
+                translateY(28px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+
+        .reveal.active {
+
+            opacity:
+                1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =========================================================
+           SUCCESS STATE
+        ========================================================= */
+
+        .success-state {
+
+            background:
+                rgba(21,150,107,.055);
+
+            border-color:
+                rgba(21,150,107,.12);
+        }
+
+
+        .success-state .status-icon {
+
+            color:
+                var(--success);
+        }
+
+
+        .success-state .status-text strong {
+
+            color:
+                var(--success);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .hero {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    50px;
+            }
+
+
+            .hero-copy {
+
+                max-width:
+                    720px;
+            }
+
+
+            .protection-console {
+
+                max-width:
+                    800px;
+            }
+
+
+            .process-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+
+            .verify-section {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    45px;
+            }
+
+
+            .tips-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                height:
+                    65px;
+            }
+
+
+            .nav-links {
+
+                position:
+                    absolute;
+
+                top:
+                    76px;
+
+                left:
+                    0;
+
+                right:
+                    0;
+
+                display:
+                    none;
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+
+                padding:
+                    15px;
+
+                border-radius:
+                    20px;
+
+                background:
+                    rgba(233,240,247,.97);
+
+                box-shadow:
+                    var(--raised);
+            }
+
+
+            .nav-links.show {
+                display:
+                    flex;
+            }
+
+
+            .nav-links a {
+                text-align:
+                    center;
+            }
+
+
+            .menu-btn {
+                display:
+                    block;
+            }
+
+
+            .hero {
+
+                padding:
+                    130px 6%
+                    70px;
+            }
+
+
+            section {
+
+                padding:
+                    75px 6%;
+            }
+
+
+            .console-body {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .cta-card {
+
+                padding:
+                    42px 28px;
+            }
+
+
+            .footer-inner {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+            }
+        }
+
+
+        @media (max-width: 560px) {
+
+            .navbar {
+
+                width:
+                    calc(100% - 22px);
+
+                top:
+                    11px;
+
+                padding:
+                    0 14px;
+            }
+
+
+            .brand-tag {
+                display:
+                    none;
+            }
+
+
+            .hero {
+
+                padding-left:
+                    5%;
+
+                padding-right:
+                    5%;
+            }
+
+
+            .hero h1 {
+                letter-spacing:
+                    -2px;
+            }
+
+
+            .protection-console {
+                padding:
+                    17px;
+            }
+
+
+            .risk-meter {
+
+                width:
+                    145px;
+
+                height:
+                    145px;
+            }
+
+
+            .risk-meter::before {
+
+                width:
+                    108px;
+
+                height:
+                    108px;
+            }
+
+
+            .risk-number {
+                font-size:
+                    29px;
+            }
+
+
+            .process-grid,
+            .tips-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .action-bar {
+
+                flex-direction:
+                    column;
+            }
+
+
+            .cta-card {
+                padding:
+                    35px 23px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================== -->
+
+    <nav class="navbar">
+
+        <a
+            href="index.html"
+            class="brand"
+        >
+
+            <div class="brand-logo">
+                U
+            </div>
+
+            <div class="brand-text">
+
+                <span class="brand-name">
+                    UPI-Shield
+                </span>
+
+                <span class="brand-tag">
+                    Contextual Payment Security
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            class="nav-links"
+            id="navLinks"
+        >
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="problem.html">
+                Problem
+            </a>
+
+            <a href="threat-demo.html">
+                Threat Demo
+            </a>
+
+            <a href="how-it-works.html">
+                How It Works
+            </a>
+
+            <a href="security.html">
+                Security
+            </a>
+
+            <a
+                href="protect.html"
+                class="nav-cta active"
+            >
+                Protect Payment
+            </a>
+
+        </div>
+
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="Open navigation"
+        >
+            ☰
+        </button>
+
+    </nav>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <main>
+
+
+        <section class="hero">
+
+
+            <div class="hero-copy reveal">
+
+                <div class="eyebrow">
+
+                    <span class="status-dot"></span>
+
+                    PROTECTION MODE ACTIVE
+
+                </div>
+
+
+                <h1>
+
+                    Before you pay,
+                    <span>know what you're paying for.</span>
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    UPI-Shield adds a contextual security layer between
+                    suspicious communication and payment authorization.
+                    Instead of blindly trusting the request, pause,
+                    analyze the situation and verify it first.
+
+                </p>
+
+
+                <div class="hero-points">
+
+                    <span class="hero-point">
+                        Context Analysis
+                    </span>
+
+                    <span class="hero-point">
+                        NLP Detection
+                    </span>
+
+                    <span class="hero-point">
+                        Risk Scoring
+                    </span>
+
+                    <span class="hero-point">
+                        Explainable Warning
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROTECTION CONSOLE
+            ================================================== -->
+
+            <div
+                class="protection-console reveal"
+                id="protectionConsole"
+            >
+
+                <div class="console-top">
+
+                    <span class="console-title">
+                        Payment Protection Console
+                    </span>
+
+                    <span class="console-status">
+
+                        <span class="status-dot"></span>
+
+                        MONITORING
+
+                    </span>
+
+                </div>
+
+
+                <div class="console-body">
+
+
+                    <!-- TRANSACTION -->
+
+                    <div class="transaction-card">
+
+                        <span class="card-label">
+                            Payment Request
+                        </span>
+
+
+                        <div class="recipient">
+
+                            <div class="recipient-avatar">
+                                EP
+                            </div>
+
+                            <div>
+
+                                <div class="recipient-name">
+                                    Electricity Portal
+                                </div>
+
+                                <div class="recipient-id">
+                                    UPI ID: electricity.verify@upi
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="amount">
+                            <span>₹</span>2,500
+                        </div>
+
+
+                        <div class="transaction-meta">
+
+                            <div class="meta">
+
+                                <span>
+                                    REQUEST TYPE
+                                </span>
+
+                                <strong>
+                                    Urgent
+                                </strong>
+
+                            </div>
+
+
+                            <div class="meta">
+
+                                <span>
+                                    SOURCE
+                                </span>
+
+                                <strong>
+                                    Message
+                                </strong>
+
+                            </div>
+
+
+                            <div class="meta">
+
+                                <span>
+                                    CLAIM
+                                </span>
+
+                                <strong>
+                                    Disconnection
+                                </strong>
+
+                            </div>
+
+
+                            <div class="meta">
+
+                                <span>
+                                    STATUS
+                                </span>
+
+                                <strong>
+                                    Unverified
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RISK -->
+
+                    <div class="risk-panel">
+
+                        <div class="risk-header">
+
+                            <strong>
+                                Contextual Risk
+                            </strong>
+
+                            <span class="analyzing">
+                                ANALYZING
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="risk-meter"
+                            id="riskMeter"
+                        >
+
+                            <div class="risk-value">
+
+                                <div
+                                    class="risk-number"
+                                    id="riskNumber"
+                                >
+                                    91
+                                </div>
+
+                                <div class="risk-label">
+                                    RISK SCORE
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="risk-level"
+                            id="riskLevel"
+                        >
+                            HIGH RISK
+                        </span>
+
+
+                        <div class="checks">
+
+
+                            <div class="check">
+
+                                <div class="check-left">
+
+                                    <div class="check-icon danger">
+                                        !
+                                    </div>
+
+                                    <span>
+                                        Urgency detected
+                                    </span>
+
+                                </div>
+
+                                <div class="check-result bad">
+                                    HIGH
+                                </div>
+
+                            </div>
+
+
+                            <div class="check">
+
+                                <div class="check-left">
+
+                                    <div class="check-icon danger">
+                                        !
+                                    </div>
+
+                                    <span>
+                                        Threat language
+                                    </span>
+
+                                </div>
+
+                                <div class="check-result bad">
+                                    HIGH
+                                </div>
+
+                            </div>
+
+
+                            <div class="check">
+
+                                <div class="check-left">
+
+                                    <div class="check-icon warning">
+                                        !
+                                    </div>
+
+                                    <span>
+                                        Sender verification
+                                    </span>
+
+                                </div>
+
+                                <div class="check-result bad">
+                                    FAILED
+                                </div>
+
+                            </div>
+
+
+                            <div class="check">
+
+                                <div class="check-left">
+
+                                    <div class="check-icon safe">
+                                        ✓
+                                    </div>
+
+                                    <span>
+                                        Authentication
+                                    </span>
+
+                                </div>
+
+                                <div class="check-result good">
+                                    VALID
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div
+                    class="protection-status"
+                    id="protectionStatus"
+                >
+
+                    <div class="status-icon">
+                        !
+                    </div>
+
+                    <div class="status-text">
+
+                        <strong id="statusTitle">
+                            Payment paused for verification
+                        </strong>
+
+                        <span id="statusDescription">
+                            The request contains multiple signals associated
+                            with social-engineering scams. Verify the request
+                            independently before continuing.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="action-bar">
+
+                    <button
+                        class="action verify-btn"
+                        id="verifyBtn"
+                    >
+                        Verify Request
+                    </button>
+
+                    <button
+                        class="action cancel-btn"
+                        id="cancelBtn"
+                    >
+                        Cancel Payment
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PROCESS
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-heading reveal">
+
+                <div class="section-kicker">
+                    PROTECTION FLOW
+                </div>
+
+                <h2>
+                    A safer pause before authorization.
+                </h2>
+
+                <p>
+                    UPI-Shield turns a suspicious payment into a simple
+                    decision-making process: detect, understand, verify
+                    and then decide.
+                </p>
+
+            </div>
+
+
+            <div class="process-grid">
+
+
+                <article class="process-card reveal">
+
+                    <span class="process-number">
+                        STEP 01
+                    </span>
+
+                    <div class="process-icon">
+                        IN
+                    </div>
+
+                    <h3>
+                        Payment Detected
+                    </h3>
+
+                    <p>
+                        A payment request enters the protection layer with
+                        its available contextual information.
+                    </p>
+
+                </article>
+
+
+                <article class="process-card reveal">
+
+                    <span class="process-number">
+                        STEP 02
+                    </span>
+
+                    <div class="process-icon">
+                        AI
+                    </div>
+
+                    <h3>
+                        Context Analyzed
+                    </h3>
+
+                    <p>
+                        Language and transaction signals are analyzed for
+                        patterns associated with social engineering.
+                    </p>
+
+                </article>
+
+
+                <article class="process-card reveal">
+
+                    <span class="process-number">
+                        STEP 03
+                    </span>
+
+                    <div class="process-icon">
+                        !
+                    </div>
+
+                    <h3>
+                        Risk Explained
+                    </h3>
+
+                    <p>
+                        The strongest reasons behind the warning are shown
+                        instead of presenting an unexplained score.
+                    </p>
+
+                </article>
+
+
+                <article class="process-card reveal">
+
+                    <span class="process-number">
+                        STEP 04
+                    </span>
+
+                    <div class="process-icon">
+                        ✓
+                    </div>
+
+                    <h3>
+                        User Decides
+                    </h3>
+
+                    <p>
+                        The user can verify, pause or cancel rather than
+                        being pushed into an immediate payment.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             VERIFICATION
+        ====================================================== -->
+
+        <section>
+
+            <div class="verify-section">
+
+
+                <div class="verify-copy reveal">
+
+                    <div class="section-kicker">
+                        VERIFY BEFORE TRUST
+                    </div>
+
+                    <h2>
+                        Don't verify the story.
+                        <span>Verify the source.</span>
+                    </h2>
+
+                    <p>
+                        Scammers often create convincing stories around
+                        electricity bills, banking issues, parcels,
+                        refunds and authority notices. UPI-Shield encourages
+                        users to independently verify the request before
+                        authorizing a payment.
+                    </p>
+
+                </div>
+
+
+                <div class="verification-panel reveal">
+
+                    <div class="verification-header">
+
+                        <strong>
+                            Verification Checklist
+                        </strong>
+
+                        <span class="verified-badge">
+                            USER CONTROL
+                        </span>
+
+                    </div>
+
+
+                    <div class="verification-row">
+
+                        <div class="verification-left">
+
+                            <div class="verification-icon">
+                                ID
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Verify recipient identity
+                                </strong>
+
+                                <small>
+                                    Confirm who will receive the payment.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <span class="verification-result">
+                            CHECK
+                        </span>
+
+                    </div>
+
+
+                    <div class="verification-row">
+
+                        <div class="verification-left">
+
+                            <div class="verification-icon">
+                                OR
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Use official channels
+                                </strong>
+
+                                <small>
+                                    Contact the organization independently.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <span class="verification-result">
+                            CHECK
+                        </span>
+
+                    </div>
+
+
+                    <div class="verification-row">
+
+                        <div class="verification-left">
+
+                            <div class="verification-icon">
+                                TX
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Review payment amount
+                                </strong>
+
+                                <small>
+                                    Confirm the amount before authorization.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <span class="verification-result">
+                            CHECK
+                        </span>
+
+                    </div>
+
+
+                    <div class="verification-row">
+
+                        <div class="verification-left">
+
+                            <div class="verification-icon">
+                                !
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Question urgency
+                                </strong>
+
+                                <small>
+                                    Pressure should never replace verification.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <span class="verification-result">
+                            CHECK
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SAFETY TIPS
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-heading reveal">
+
+                <div class="section-kicker">
+                    SMART PAYMENT HABITS
+                </div>
+
+                <h2>
+                    Four habits that make
+                    digital payments safer.
+                </h2>
+
+            </div>
+
+
+            <div class="tips-grid">
+
+
+                <article class="tip reveal">
+
+                    <div class="tip-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Never rush because of a threat
+                    </h3>
+
+                    <p>
+                        Fake urgency is one of the strongest psychological
+                        tools used in social-engineering scams.
+                    </p>
+
+                </article>
+
+
+                <article class="tip reveal">
+
+                    <div class="tip-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Verify outside the conversation
+                    </h3>
+
+                    <p>
+                        Use an organization's official website, application
+                        or known contact method instead of the sender's link
+                        or number.
+                    </p>
+
+                </article>
+
+
+                <article class="tip reveal">
+
+                    <div class="tip-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Check the recipient carefully
+                    </h3>
+
+                    <p>
+                        Review the recipient identity and payment details
+                        before authorizing a transaction.
+                    </p>
+
+                </article>
+
+
+                <article class="tip reveal">
+
+                    <div class="tip-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Treat unexpected payment requests carefully
+                    </h3>
+
+                    <p>
+                        Unexpected fees, refunds, penalties or verification
+                        payments deserve additional scrutiny.
+                    </p>
+
+                </article>
+
+
+                <article class="tip reveal">
+
+                    <div class="tip-number">
+                        05
+                    </div>
+
+                    <h3>
+                        Understand the warning
+                    </h3>
+
+                    <p>
+                        If a security system explains a suspicious pattern,
+                        use that information before deciding what to do.
+                    </p>
+
+                </article>
+
+
+                <article class="tip reveal">
+
+                    <div class="tip-number">
+                        06
+                    </div>
+
+                    <h3>
+                        When unsure, stop
+                    </h3>
+
+                    <p>
+                        A short pause is safer than authorizing a payment
+                        under pressure and trying to reverse it later.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CTA
+        ====================================================== -->
+
+        <section class="cta">
+
+            <div class="cta-card reveal">
+
+                <h2>
+                    A secure payment starts with a clear decision.
+                </h2>
+
+                <p>
+                    UPI-Shield is a conceptual hackathon prototype designed
+                    to demonstrate how contextual intelligence can complement
+                    traditional payment authentication.
+                </p>
+
+                <a
+                    href="threat-demo.html"
+                    class="btn"
+                >
+                    Run Another Threat Simulation →
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+
+            <div>
+
+                <div class="footer-brand">
+                    UPI-Shield
+                </div>
+
+                <div class="footer-copy">
+                    Contextual digital payment security prototype.
+                </div>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="problem.html">
+                    Problem
+                </a>
+
+                <a href="threat-demo.html">
+                    Threat Demo
+                </a>
+
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
+
+                <a href="security.html">
+                    Security
+                </a>
+
+                <a href="protect.html">
+                    Protect
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        /* =========================================================
+           MOBILE NAVIGATION
+        ========================================================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+
+        menuBtn.addEventListener(
+            "click",
+            () => {
+
+                navLinks.classList.toggle(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(".nav-links a")
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        navLinks.classList.remove(
+                            "show"
+                        );
+
+                    }
+                );
+
+            });
+
+
+        /* =========================================================
+           SCROLL REVEAL
+        ========================================================= */
+
+        const observer =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target
+                                .classList
+                                .add("active");
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        document
+            .querySelectorAll(".reveal")
+            .forEach(element => {
+
+                observer.observe(
+                    element
+                );
+
+            });
+
+
+        /* =========================================================
+           STAGGER ANIMATIONS
+        ========================================================= */
+
+        document
+            .querySelectorAll(".process-card")
+            .forEach(
+                (card, index) => {
+
+                    card.style.transitionDelay =
+                        `${index * 80}ms`;
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(".tip")
+            .forEach(
+                (card, index) => {
+
+                    card.style.transitionDelay =
+                        `${index * 70}ms`;
+
+                }
+            );
+
+
+        /* =========================================================
+           RISK METER
+        ========================================================= */
+
+        const riskMeter =
+            document.getElementById(
+                "riskMeter"
+            );
+
+        const riskNumber =
+            document.getElementById(
+                "riskNumber"
+            );
+
+
+        function animateRisk() {
+
+            let current =
+                0;
+
+            const target =
+                91;
+
+            const interval =
+                setInterval(
+                    () => {
+
+                        current++;
+
+                        riskNumber.textContent =
+                            current;
+
+                        const degrees =
+                            current *
+                            3.6;
+
+                        riskMeter.style.background =
+                            `conic-gradient(
+                                var(--danger)
+                                0deg,
+                                var(--danger)
+                                ${degrees}deg,
+                                rgba(23,105,224,.08)
+                                ${degrees}deg
+                            )`;
+
+                        if (
+                            current >= target
+                        ) {
+
+                            clearInterval(
+                                interval
+                            );
+
+                        }
+
+                    },
+                    15
+                );
+        }
+
+
+        setTimeout(
+            animateRisk,
+            500
+        );
+
+
+        /* =========================================================
+           VERIFY REQUEST
+        ========================================================= */
+
+        const verifyBtn =
+            document.getElementById(
+                "verifyBtn"
+            );
+
+        const cancelBtn =
+            document.getElementById(
+                "cancelBtn"
+            );
+
+        const protectionStatus =
+            document.getElementById(
+                "protectionStatus"
+            );
+
+        const statusIcon =
+            protectionStatus.querySelector(
+                ".status-icon"
+            );
+
+        const statusTitle =
+            document.getElementById(
+                "statusTitle"
+            );
+
+        const statusDescription =
+            document.getElementById(
+                "statusDescription"
+            );
+
+
+        verifyBtn.addEventListener(
+            "click",
+            () => {
+
+                verifyBtn.textContent =
+                    "Verifying...";
+
+                verifyBtn.disabled =
+                    true;
+
+                setTimeout(
+                    () => {
+
+                        protectionStatus
+                            .classList
+                            .add(
+                                "success-state"
+                            );
+
+                        statusIcon.textContent =
+                            "✓";
+
+                        statusTitle.textContent =
+                            "Verification recommended";
+
+                        statusDescription.textContent =
+                            "The recipient should be independently verified through an official channel before this payment is authorized.";
+
+                        verifyBtn.textContent =
+                            "Verification Required";
+
+                        verifyBtn.style.opacity =
+                            ".65";
+
+                    },
+                    1100
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           CANCEL PAYMENT
+        ========================================================= */
+
+        cancelBtn.addEventListener(
+            "click",
+            () => {
+
+                protectionStatus
+                    .classList
+                    .add(
+                        "success-state"
+                    );
+
+                statusIcon.textContent =
+                    "✓";
+
+                statusTitle.textContent =
+                    "Payment cancelled safely";
+
+                statusDescription.textContent =
+                    "The payment simulation has been stopped. No real transaction has been initiated.";
+
+                cancelBtn.textContent =
+                    "Payment Cancelled";
+
+                cancelBtn.disabled =
+                    true;
+
+                cancelBtn.style.opacity =
+                    ".65";
+
+                verifyBtn.style.opacity =
+                    ".5";
+
+            }
+        );
+
+
+        /* =========================================================
+           CONSOLE TILT EFFECT
+        ========================================================= */
+
+        const console =
+            document.getElementById(
+                "protectionConsole"
+            );
+
+
+        console.addEventListener(
+            "mousemove",
+            event => {
+
+                if (
+                    window.innerWidth < 900
+                ) {
+                    return;
+                }
+
+                const rect =
+                    console.getBoundingClientRect();
+
+                const x =
+                    event.clientX -
+                    rect.left;
+
+                const y =
+                    event.clientY -
+                    rect.top;
+
+                const rotateX =
+                    ((y / rect.height) - .5)
+                    * -2.5;
+
+                const rotateY =
+                    ((x / rect.width) - .5)
+                    * 2.5;
+
+                console.style.transform =
+                    `perspective(1200px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+
+            }
+        );
+
+
+        console.addEventListener(
+            "mouseleave",
+            () => {
+
+                console.style.transform =
+                    "perspective(1200px) rotateX(0) rotateY(0)";
+
+            }
+        );
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Security | UPI-Shield</title>
+
+    <meta
+        name="description"
+        content="Explore the security principles behind UPI-Shield, including contextual analysis, privacy, explainability and user-first intervention."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =========================================================
+           UPI-SHIELD SECURITY
+           Premium Neumorphic Fintech Security Interface
+        ========================================================= */
+
+        :root {
+
+            --bg: #e9f0f7;
+
+            --primary: #1769e0;
+            --primary-dark: #0d4fae;
+            --primary-light: #4d91f5;
+
+            --cyan: #08a9d6;
+
+            --success: #15966b;
+            --warning: #df8b31;
+            --danger: #d94b55;
+
+            --text: #12263a;
+            --muted: #62798d;
+            --soft: #8093a4;
+
+            --white: #ffffff;
+
+            --dark-shadow: rgba(163, 177, 198, 0.62);
+            --light-shadow: rgba(255, 255, 255, 0.96);
+
+            --raised:
+                10px 10px 22px var(--dark-shadow),
+                -10px -10px 22px var(--light-shadow);
+
+            --raised-small:
+                6px 6px 14px rgba(163,177,198,.55),
+                -6px -6px 14px rgba(255,255,255,.92);
+
+            --inset:
+                inset 6px 6px 13px rgba(163,177,198,.48),
+                inset -6px -6px 13px rgba(255,255,255,.92);
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================================================
+           DECORATIVE BACKGROUND
+        ========================================================= */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 430px;
+            height: 430px;
+
+            top: -210px;
+            right: -110px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(77,145,245,.11),
+                    transparent 65%
+                );
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 360px;
+            height: 360px;
+
+            bottom: -180px;
+            left: -120px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(8,169,214,.08),
+                    transparent 65%
+                );
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+
+            position: fixed;
+
+            top: 18px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: min(1180px, calc(100% - 36px));
+
+            height: 72px;
+
+            padding: 0 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-radius: 22px;
+
+            background:
+                rgba(233,240,247,.90);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow: var(--raised-small);
+
+            z-index: 1000;
+        }
+
+        .brand {
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            font-weight: 800;
+        }
+
+        .brand-logo {
+
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 13px;
+
+            color: var(--primary);
+
+            box-shadow: var(--raised-small);
+
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .brand-text {
+
+            display: flex;
+            flex-direction: column;
+
+            line-height: 1.1;
+        }
+
+        .brand-name {
+            font-size: 15px;
+        }
+
+        .brand-tag {
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            margin-top: 4px;
+
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+
+            display: flex;
+            align-items: center;
+
+            gap: 5px;
+        }
+
+        .nav-links a {
+
+            padding: 11px 13px;
+
+            border-radius: 12px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+            font-weight: 600;
+
+            transition: .25s ease;
+        }
+
+        .nav-links a:hover {
+
+            color: var(--primary);
+
+            background:
+                rgba(255,255,255,.35);
+
+            box-shadow: var(--raised-small);
+
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+
+            color: var(--primary);
+
+            background:
+                rgba(255,255,255,.40);
+
+            box-shadow: var(--inset);
+        }
+
+        .nav-cta {
+
+            color: white !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-light)
+                ) !important;
+
+            box-shadow:
+                5px 5px 12px rgba(13,79,174,.25),
+                -4px -4px 10px rgba(255,255,255,.7) !important;
+        }
+
+        .menu-btn {
+
+            display: none;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+
+            color: var(--primary);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+
+            min-height: 88vh;
+
+            padding:
+                155px 7%
+                90px;
+
+            display: grid;
+
+            grid-template-columns:
+                1.1fr
+                .9fr;
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+        .eyebrow {
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 9px 14px;
+
+            border-radius: 50px;
+
+            color: var(--primary);
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: .6px;
+
+            box-shadow: var(--inset);
+        }
+
+        .shield-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+
+            box-shadow:
+                0 0 0 5px
+                rgba(21,150,107,.08);
+        }
+
+        .hero h1 {
+
+            margin-top: 26px;
+
+            font-size:
+                clamp(43px, 5.5vw, 75px);
+
+            line-height: 1.01;
+
+            letter-spacing: -4px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero-description {
+
+            max-width: 650px;
+
+            margin-top: 25px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.85;
+        }
+
+        .hero-actions {
+
+            display: flex;
+
+            gap: 14px;
+
+            margin-top: 34px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+
+            min-height: 48px;
+
+            padding:
+                0 20px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            border: none;
+            border-radius: 14px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+        .btn-primary {
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-light)
+                );
+
+            box-shadow:
+                7px 7px 15px rgba(13,79,174,.25),
+                -6px -6px 14px rgba(255,255,255,.8);
+        }
+
+        .btn-secondary {
+
+            color: var(--primary);
+
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* =========================================================
+           SECURITY VISUAL
+        ========================================================= */
+
+        .security-orbit {
+
+            position: relative;
+
+            width: min(440px, 100%);
+            aspect-ratio: 1;
+
+            margin: auto;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            box-shadow: var(--raised);
+        }
+
+        .orbit {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                rgba(23,105,224,.12);
+
+            animation:
+                rotate 15s linear infinite;
+        }
+
+        .orbit-one {
+            width: 72%;
+            height: 72%;
+        }
+
+        .orbit-two {
+
+            width: 88%;
+            height: 88%;
+
+            animation-duration: 22s;
+            animation-direction: reverse;
+        }
+
+        .orbit-three {
+
+            width: 56%;
+            height: 56%;
+
+            animation-duration: 11s;
+        }
+
+        @keyframes rotate {
+
+            from {
+                transform: rotate(0);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .shield-core {
+
+            position: relative;
+            z-index: 5;
+
+            width: 135px;
+            height: 155px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            clip-path:
+                polygon(
+                    50% 0%,
+                    92% 15%,
+                    88% 65%,
+                    50% 100%,
+                    12% 65%,
+                    8% 15%
+                );
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #dce9f5
+                );
+
+            color: var(--primary);
+
+            box-shadow:
+                10px 10px 25px
+                rgba(163,177,198,.55),
+                -10px -10px 25px
+                rgba(255,255,255,.95);
+
+            font-size: 46px;
+
+            animation:
+                shieldFloat 3.5s ease-in-out infinite;
+        }
+
+        @keyframes shieldFloat {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-9px);
+            }
+        }
+
+        .security-chip {
+
+            position: absolute;
+
+            padding: 10px 13px;
+
+            border-radius: 13px;
+
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+
+            font-size: 9px;
+            font-weight: 800;
+
+            color: var(--muted);
+
+            z-index: 8;
+        }
+
+        .chip-one {
+            top: 17%;
+            right: 7%;
+        }
+
+        .chip-two {
+            bottom: 20%;
+            left: 4%;
+        }
+
+        .chip-three {
+            top: 35%;
+            left: 0;
+        }
+
+        .chip-four {
+            bottom: 12%;
+            right: 10%;
+        }
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        section {
+            padding:
+                105px 7%;
+        }
+
+        .section-heading {
+
+            max-width: 720px;
+
+            margin-bottom: 50px;
+        }
+
+        .section-kicker {
+
+            color: var(--primary);
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+
+            margin-top: 13px;
+
+            font-size:
+                clamp(31px, 4vw, 49px);
+
+            line-height: 1.08;
+
+            letter-spacing: -2px;
+        }
+
+        .section-heading p {
+
+            margin-top: 17px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           SECURITY PRINCIPLES
+        ========================================================= */
+
+        .principles-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .principle {
+
+            padding: 27px;
+
+            min-height: 275px;
+
+            border-radius: 24px;
+
+            box-shadow: var(--raised-small);
+
+            transition: .35s ease;
+        }
+
+        .principle:hover {
+
+            transform: translateY(-8px);
+
+            box-shadow: var(--raised);
+        }
+
+        .principle-icon {
+
+            width: 50px;
+            height: 50px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 15px;
+
+            color: var(--primary);
+
+            box-shadow: var(--inset);
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .principle h3 {
+
+            margin-top: 23px;
+
+            font-size: 15px;
+        }
+
+        .principle p {
+
+            margin-top: 11px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.75;
+        }
+
+        .principle-tag {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            color: var(--primary);
+
+            background:
+                rgba(23,105,224,.06);
+
+            font-size: 8px;
+            font-weight: 800;
+
+            letter-spacing: .8px;
+        }
+
+        /* =========================================================
+           PRIVACY
+        ========================================================= */
+
+        .privacy {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 65px;
+
+            align-items: center;
+        }
+
+        .privacy-copy h2 {
+
+            margin-top: 13px;
+
+            font-size:
+                clamp(31px, 4vw, 48px);
+
+            line-height: 1.08;
+
+            letter-spacing: -2px;
+        }
+
+        .privacy-copy h2 span {
+            color: var(--primary);
+        }
+
+        .privacy-copy > p {
+
+            margin-top: 18px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.85;
+        }
+
+        .privacy-list {
+
+            display: grid;
+
+            gap: 13px;
+
+            margin-top: 25px;
+        }
+
+        .privacy-item {
+
+            display: flex;
+
+            gap: 12px;
+
+            align-items: center;
+        }
+
+        .privacy-check {
+
+            width: 29px;
+            height: 29px;
+
+            flex: 0 0 29px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            color: var(--success);
+
+            box-shadow: var(--raised-small);
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .privacy-item span:last-child {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           PRIVACY PANEL
+        ========================================================= */
+
+        .privacy-panel {
+
+            padding: 28px;
+
+            border-radius: 28px;
+
+            box-shadow: var(--raised);
+        }
+
+        .privacy-panel-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+        }
+
+        .privacy-panel-header strong {
+            font-size: 13px;
+        }
+
+        .private-badge {
+
+            padding: 7px 10px;
+
+            border-radius: 50px;
+
+            color: var(--success);
+
+            background:
+                rgba(21,150,107,.08);
+
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .data-row {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 14px 0;
+
+            border-bottom:
+                1px solid
+                rgba(98,121,141,.08);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+        .data-icon {
+
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            box-shadow: var(--inset);
+
+            color: var(--primary);
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .data-info strong {
+
+            display: block;
+
+            font-size: 10px;
+        }
+
+        .data-info small {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 8px;
+        }
+
+        .data-status {
+
+            padding: 5px 8px;
+
+            border-radius: 7px;
+
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .status-minimal {
+
+            color: var(--success);
+
+            background:
+                rgba(21,150,107,.08);
+        }
+
+        .status-context {
+
+            color: var(--primary);
+
+            background:
+                rgba(23,105,224,.08);
+        }
+
+        .status-user {
+
+            color: var(--warning);
+
+            background:
+                rgba(223,139,49,.09);
+        }
+
+        /* =========================================================
+           EXPLAINABILITY
+        ========================================================= */
+
+        .explainability {
+
+            padding-top: 40px;
+        }
+
+        .explain-card {
+
+            display: grid;
+
+            grid-template-columns:
+                .85fr
+                1.15fr;
+
+            gap: 60px;
+
+            padding: 42px;
+
+            border-radius: 30px;
+
+            box-shadow: var(--raised);
+        }
+
+        .explain-copy h2 {
+
+            margin-top: 12px;
+
+            font-size:
+                clamp(29px, 3.5vw, 43px);
+
+            line-height: 1.1;
+
+            letter-spacing: -2px;
+        }
+
+        .explain-copy p {
+
+            margin-top: 16px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.8;
+        }
+
+        .reason-list {
+
+            display: grid;
+
+            gap: 12px;
+        }
+
+        .reason {
+
+            display: grid;
+
+            grid-template-columns:
+                36px 1fr auto;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px;
+
+            border-radius: 14px;
+
+            box-shadow: var(--inset);
+        }
+
+        .reason-number {
+
+            width: 30px;
+            height: 30px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            color: var(--primary);
+
+            box-shadow: var(--raised-small);
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .reason strong {
+            font-size: 10px;
+        }
+
+        .reason small {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 8px;
+        }
+
+        .reason-score {
+
+            color: var(--danger);
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           DEFENSE LAYERS
+        ========================================================= */
+
+        .defense-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 17px;
+        }
+
+        .defense {
+
+            padding: 24px;
+
+            border-radius: 20px;
+
+            box-shadow: var(--raised-small);
+
+            transition: .3s ease;
+        }
+
+        .defense:hover {
+            transform: translateY(-6px);
+        }
+
+        .defense-number {
+
+            color: var(--primary);
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .defense h3 {
+
+            margin-top: 17px;
+
+            font-size: 13px;
+        }
+
+        .defense p {
+
+            margin-top: 9px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           CTA
+        ========================================================= */
+
+        .cta {
+
+            padding-top: 55px;
+
+            padding-bottom: 120px;
+        }
+
+        .cta-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 65px;
+
+            border-radius: 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(23,105,224,.96),
+                    rgba(77,145,245,.94)
+                );
+
+            color: white;
+
+            box-shadow:
+                15px 15px 35px rgba(13,79,174,.25),
+                -10px -10px 25px rgba(255,255,255,.75);
+        }
+
+        .cta-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            right: -70px;
+            bottom: -160px;
+
+            border-radius: 50%;
+
+            border:
+                50px solid
+                rgba(255,255,255,.08);
+        }
+
+        .cta-card h2 {
+
+            position: relative;
+
+            max-width: 670px;
+
+            font-size:
+                clamp(30px,4vw,48px);
+
+            line-height: 1.08;
+
+            letter-spacing: -2px;
+        }
+
+        .cta-card p {
+
+            position: relative;
+
+            max-width: 620px;
+
+            margin-top: 17px;
+
+            color:
+                rgba(255,255,255,.78);
+
+            font-size: 13px;
+
+            line-height: 1.75;
+        }
+
+        .cta-card .btn {
+
+            position: relative;
+
+            margin-top: 28px;
+
+            background: white;
+
+            color: var(--primary);
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+
+            padding:
+                35px 7%
+                45px;
+
+            border-top:
+                1px solid
+                rgba(98,121,141,.08);
+        }
+
+        .footer-inner {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .footer-brand {
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .footer-copy {
+
+            margin-top: 6px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+        }
+
+        .footer-links {
+
+            display: flex;
+
+            gap: 17px;
+
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            transition: .2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* =========================================================
+           REVEAL
+        ========================================================= */
+
+        .reveal {
+
+            opacity: 0;
+
+            transform:
+                translateY(30px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+        .reveal.active {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .hero {
+
+                grid-template-columns: 1fr;
+
+                gap: 60px;
+            }
+
+            .security-orbit {
+                max-width: 400px;
+            }
+
+            .principles-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .privacy {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .explain-card {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .defense-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            .navbar {
+
+                height: 65px;
+            }
+
+            .nav-links {
+
+                position: absolute;
+
+                top: 76px;
+
+                left: 0;
+                right: 0;
+
+                display: none;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                padding: 15px;
+
+                border-radius: 20px;
+
+                background:
+                    rgba(233,240,247,.97);
+
+                box-shadow: var(--raised);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                text-align: center;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero {
+
+                padding:
+                    130px 6%
+                    70px;
+            }
+
+            section {
+
+                padding:
+                    75px 6%;
+            }
+
+            .cta-card {
+
+                padding:
+                    42px 28px;
+            }
+
+            .footer-inner {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 560px) {
+
+            .navbar {
+
+                width:
+                    calc(100% - 22px);
+
+                top: 11px;
+
+                padding:
+                    0 14px;
+            }
+
+            .brand-tag {
+                display: none;
+            }
+
+            .hero {
+
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .hero h1 {
+
+                letter-spacing: -2px;
+            }
+
+            .principles-grid,
+            .defense-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .security-orbit {
+
+                width: 310px;
+            }
+
+            .shield-core {
+
+                width: 105px;
+                height: 120px;
+
+                font-size: 34px;
+            }
+
+            .security-chip {
+
+                font-size: 8px;
+
+                padding:
+                    8px 9px;
+            }
+
+            .explain-card {
+
+                padding:
+                    25px 20px;
+            }
+
+            .reason {
+
+                grid-template-columns:
+                    32px 1fr;
+            }
+
+            .reason-score {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================== -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="brand">
+
+            <div class="brand-logo">
+                U
+            </div>
+
+            <div class="brand-text">
+
+                <span class="brand-name">
+                    UPI-Shield
+                </span>
+
+                <span class="brand-tag">
+                    Contextual Payment Security
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="problem.html">
+                Problem
+            </a>
+
+            <a href="threat-demo.html">
+                Threat Demo
+            </a>
+
+            <a href="how-it-works.html">
+                How It Works
+            </a>
+
+            <a href="security.html" class="active">
+                Security
+            </a>
+
+            <a href="protect.html" class="nav-cta">
+                Protect Payment
+            </a>
+
+        </div>
+
+
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
+
+    </nav>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content reveal">
+
+                <div class="eyebrow">
+
+                    <span class="shield-dot"></span>
+
+                    SECURITY BY DESIGN
+
+                </div>
+
+
+                <h1>
+
+                    Protection that puts
+                    <span>the user first.</span>
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    UPI-Shield is designed around a simple principle:
+                    security should not only stop suspicious transactions.
+                    It should help users understand why a payment may be
+                    dangerous before they authorize it.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a
+                        href="#principles"
+                        class="btn btn-primary"
+                    >
+                        Explore Security →
+                    </a>
+
+                    <a
+                        href="threat-demo.html"
+                        class="btn btn-secondary"
+                    >
+                        View Threat Demo
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- SECURITY VISUAL -->
+
+            <div class="security-orbit reveal">
+
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit orbit-three"></div>
+
+
+                <div class="security-chip chip-one">
+                    PRIVACY
+                </div>
+
+                <div class="security-chip chip-two">
+                    CONTEXT
+                </div>
+
+                <div class="security-chip chip-three">
+                    NLP
+                </div>
+
+                <div class="security-chip chip-four">
+                    EXPLAINABLE
+                </div>
+
+
+                <div class="shield-core">
+                    ◈
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PRINCIPLES
+        ====================================================== -->
+
+        <section id="principles">
+
+            <div class="section-heading reveal">
+
+                <div class="section-kicker">
+                    SECURITY PRINCIPLES
+                </div>
+
+                <h2>
+                    Security should be intelligent,
+                    explainable and human.
+                </h2>
+
+                <p>
+                    UPI-Shield combines contextual intelligence with
+                    user-centered security principles to address scams
+                    where the user is technically authenticated but
+                    psychologically manipulated.
+                </p>
+
+            </div>
+
+
+            <div class="principles-grid">
+
+                <article class="principle reveal">
+
+                    <div class="principle-icon">
+                        CX
+                    </div>
+
+                    <h3>
+                        Context-Aware Detection
+                    </h3>
+
+                    <p>
+                        Analyze the circumstances surrounding a payment,
+                        not only the credentials used to authorize it.
+                    </p>
+
+                    <span class="principle-tag">
+                        CONTEXT FIRST
+                    </span>
+
+                </article>
+
+
+                <article class="principle reveal">
+
+                    <div class="principle-icon">
+                        AI
+                    </div>
+
+                    <h3>
+                        Explainable Intelligence
+                    </h3>
+
+                    <p>
+                        Security decisions should provide understandable
+                        reasons such as urgency, threats, impersonation
+                        or suspicious payment context.
+                    </p>
+
+                    <span class="principle-tag">
+                        EXPLAINABLE
+                    </span>
+
+                </article>
+
+
+                <article class="principle reveal">
+
+                    <div class="principle-icon">
+                        PR
+                    </div>
+
+                    <h3>
+                        Privacy-Aware Design
+                    </h3>
+
+                    <p>
+                        The conceptual system focuses on relevant signals
+                        required for risk analysis instead of collecting
+                        unnecessary personal information.
+                    </p>
+
+                    <span class="principle-tag">
+                        DATA MINIMIZATION
+                    </span>
+
+                </article>
+
+
+                <article class="principle reveal">
+
+                    <div class="principle-icon">
+                        UI
+                    </div>
+
+                    <h3>
+                        User-Centered Intervention
+                    </h3>
+
+                    <p>
+                        Instead of silently blocking users, the system
+                        can explain the detected risk and give them an
+                        opportunity to pause and reconsider.
+                    </p>
+
+                    <span class="principle-tag">
+                        HUMAN CONTROL
+                    </span>
+
+                </article>
+
+
+                <article class="principle reveal">
+
+                    <div class="principle-icon">
+                        NLP
+                    </div>
+
+                    <h3>
+                        Psychological Signal Detection
+                    </h3>
+
+                    <p>
+                        Language patterns can expose social engineering
+                        techniques such as fear, urgency, intimidation
+                        and authority impersonation.
+                    </p>
+
+                    <span class="principle-tag">
+                        NLP SECURITY
+                    </span>
+
+                </article>
+
+
+                <article class="principle reveal">
+
+                    <div class="principle-icon">
+                        24
+                    </div>
+
+                    <h3>
+                        Continuous Awareness
+                    </h3>
+
+                    <p>
+                        Security becomes more effective when users understand
+                        what is happening instead of blindly trusting the
+                        authentication screen.
+                    </p>
+
+                    <span class="principle-tag">
+                        AWARENESS
+                    </span>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PRIVACY
+        ====================================================== -->
+
+        <section>
+
+            <div class="privacy">
+
+                <div class="privacy-copy reveal">
+
+                    <div class="section-kicker">
+                        PRIVACY BY DESIGN
+                    </div>
+
+                    <h2>
+                        Analyze what matters.
+                        <span>Minimize what doesn't.</span>
+                    </h2>
+
+                    <p>
+                        A contextual security system should avoid turning
+                        fraud detection into unnecessary surveillance.
+                        UPI-Shield's conceptual approach emphasizes
+                        relevant contextual signals and data minimization.
+                    </p>
+
+
+                    <div class="privacy-list">
+
+                        <div class="privacy-item">
+
+                            <div class="privacy-check">
+                                ✓
+                            </div>
+
+                            <span>
+                                Focus on relevant payment-risk signals.
+                            </span>
+
+                        </div>
+
+
+                        <div class="privacy-item">
+
+                            <div class="privacy-check">
+                                ✓
+                            </div>
+
+                            <span>
+                                Avoid unnecessary personal-data collection.
+                            </span>
+
+                        </div>
+
+
+                        <div class="privacy-item">
+
+                            <div class="privacy-check">
+                                ✓
+                            </div>
+
+                            <span>
+                                Keep security explanations understandable.
+                            </span>
+
+                        </div>
+
+
+                        <div class="privacy-item">
+
+                            <div class="privacy-check">
+                                ✓
+                            </div>
+
+                            <span>
+                                Keep the user involved in the final decision.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATA PANEL -->
+
+                <div class="privacy-panel reveal">
+
+                    <div class="privacy-panel-header">
+
+                        <strong>
+                            Context Data Model
+                        </strong>
+
+                        <span class="private-badge">
+                            MINIMAL
+                        </span>
+
+                    </div>
+
+
+                    <div class="data-row">
+
+                        <div class="data-info">
+
+                            <div class="data-icon">
+                                TX
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Transaction Context
+                                </strong>
+
+                                <small>
+                                    Amount / recipient / timing
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <span class="data-status status-context">
+                            RELEVANT
+                        </span>
+
+                    </div>
+
+
+                    <div class="data-row">
+
+                        <div class="data-info">
+
+                            <div class="data-icon">
+                                NLP
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Language Signals
+                                </strong>
+
+                                <small>
+                                    Urgency / threats / impersonation
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <span class="data-status status-context">
+                            ANALYZE
+                        </span>
+
+                    </div>
+
+
+                    <div class="data-row">
+
+                        <div class="data-info">
+
+                            <div class="data-icon">
+                                R
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Risk Signals
+                                </strong>
+
+                                <small>
+                                    Combined contextual indicators
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <span class="data-status status-minimal">
+                            REQUIRED
+                        </span>
+
+                    </div>
+
+
+                    <div class="data-row">
+
+                        <div class="data-info">
+
+                            <div class="data-icon">
+                                U
+                            </div>
+
+                            <div>
+                                <strong>
+                                    User Decision
+                                </strong>
+
+                                <small>
+                                    Warning / pause / continue
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <span class="data-status status-user">
+                            USER
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             EXPLAINABILITY
+        ====================================================== -->
+
+        <section class="explainability">
+
+            <div class="section-heading reveal">
+
+                <div class="section-kicker">
+                    EXPLAINABLE SECURITY
+                </div>
+
+                <h2>
+                    Don't just say
+                    "dangerous." Explain why.
+                </h2>
+
+                <p>
+                    A security warning becomes more useful when the user
+                    can understand the evidence behind it.
+                </p>
+
+            </div>
+
+
+            <div class="explain-card reveal">
+
+                <div class="explain-copy">
+
+                    <div class="section-kicker">
+                        EXAMPLE
+                    </div>
+
+                    <h2>
+                        Your payment
+                        looks <span>unusual.</span>
+                    </h2>
+
+                    <p>
+                        UPI-Shield can present the strongest contextual
+                        signals contributing to the warning so the user
+                        can make a more informed decision.
+                    </p>
+
+                </div>
+
+
+                <div class="reason-list">
+
+                    <div class="reason">
+
+                        <div class="reason-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                High urgency language
+                            </strong>
+
+                            <small>
+                                The message creates immediate pressure.
+                            </small>
+
+                        </div>
+
+                        <div class="reason-score">
+                            94%
+                        </div>
+
+                    </div>
+
+
+                    <div class="reason">
+
+                        <div class="reason-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Authority impersonation
+                            </strong>
+
+                            <small>
+                                The sender claims to represent an institution.
+                            </small>
+
+                        </div>
+
+                        <div class="reason-score">
+                            91%
+                        </div>
+
+                    </div>
+
+
+                    <div class="reason">
+
+                        <div class="reason-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Payment context mismatch
+                            </strong>
+
+                            <small>
+                                The requested payment does not fit the context.
+                            </small>
+
+                        </div>
+
+                        <div class="reason-score">
+                            87%
+                        </div>
+
+                    </div>
+
+
+                    <div class="reason">
+
+                        <div class="reason-number">
+                            04
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Threat-based pressure
+                            </strong>
+
+                            <small>
+                                Negative consequences are used to force action.
+                            </small>
+
+                        </div>
+
+                        <div class="reason-score">
+                            89%
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DEFENSE LAYERS
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-heading reveal">
+
+                <div class="section-kicker">
+                    DEFENSE LAYERS
+                </div>
+
+                <h2>
+                    Multiple layers.
+                    One clear objective.
+                </h2>
+
+            </div>
+
+
+            <div class="defense-grid">
+
+                <article class="defense reveal">
+
+                    <div class="defense-number">
+                        LAYER 01
+                    </div>
+
+                    <h3>
+                        Detect
+                    </h3>
+
+                    <p>
+                        Identify suspicious language and contextual signals.
+                    </p>
+
+                </article>
+
+
+                <article class="defense reveal">
+
+                    <div class="defense-number">
+                        LAYER 02
+                    </div>
+
+                    <h3>
+                        Correlate
+                    </h3>
+
+                    <p>
+                        Combine multiple weak indicators into a stronger
+                        contextual assessment.
+                    </p>
+
+                </article>
+
+
+                <article class="defense reveal">
+
+                    <div class="defense-number">
+                        LAYER 03
+                    </div>
+
+                    <h3>
+                        Explain
+                    </h3>
+
+                    <p>
+                        Show the user the reasons contributing to the warning.
+                    </p>
+
+                </article>
+
+
+                <article class="defense reveal">
+
+                    <div class="defense-number">
+                        LAYER 04
+                    </div>
+
+                    <h3>
+                        Intervene
+                    </h3>
+
+                    <p>
+                        Give the user a moment to stop, verify and reconsider.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CTA
+        ====================================================== -->
+
+        <section class="cta">
+
+            <div class="cta-card reveal">
+
+                <h2>
+                    Security works better when users understand the threat.
+                </h2>
+
+                <p>
+                    Explore how UPI-Shield transforms suspicious communication
+                    into a contextual warning before the payment is authorized.
+                </p>
+
+                <a
+                    href="threat-demo.html"
+                    class="btn"
+                >
+                    Experience the Protection →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <div>
+
+                <div class="footer-brand">
+                    UPI-Shield
+                </div>
+
+                <div class="footer-copy">
+                    Contextual digital payment security prototype.
+                </div>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="problem.html">
+                    Problem
+                </a>
+
+                <a href="threat-demo.html">
+                    Threat Demo
+                </a>
+
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
+
+                <a href="security.html">
+                    Security
+                </a>
+
+                <a href="protect.html">
+                    Protect
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        /* =========================================================
+           MOBILE NAV
+        ========================================================== */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+
+        menuBtn.addEventListener(
+            "click",
+            () => {
+
+                navLinks.classList.toggle("show");
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(".nav-links a")
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        navLinks.classList.remove("show");
+
+                    }
+                );
+
+            });
+
+
+        /* =========================================================
+           SCROLL REVEAL
+        ========================================================== */
+
+        const observer =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target
+                                .classList
+                                .add("active");
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        document
+            .querySelectorAll(".reveal")
+            .forEach(element => {
+
+                observer.observe(element);
+
+            });
+
+
+        /* =========================================================
+           STAGGER PRINCIPLE CARDS
+        ========================================================== */
+
+        document
+            .querySelectorAll(".principle")
+            .forEach(
+                (card, index) => {
+
+                    card.style.transitionDelay =
+                        `${index * 70}ms`;
+
+                }
+            );
+
+
+        /* =========================================================
+           STAGGER DEFENSE CARDS
+        ========================================================== */
+
+        document
+            .querySelectorAll(".defense")
+            .forEach(
+                (card, index) => {
+
+                    card.style.transitionDelay =
+                        `${index * 80}ms`;
+
+                }
+            );
+
+
+        /* =========================================================
+           INTERACTIVE SECURITY ORBIT
+        ========================================================== */
+
+        const securityOrbit =
+            document.querySelector(
+                ".security-orbit"
+            );
+
+
+        securityOrbit.addEventListener(
+            "mousemove",
+            event => {
+
+                const rect =
+                    securityOrbit.getBoundingClientRect();
+
+                const x =
+                    event.clientX -
+                    rect.left;
+
+                const y =
+                    event.clientY -
+                    rect.top;
+
+                const rotateX =
+                    ((y / rect.height) - .5) * -7;
+
+                const rotateY =
+                    ((x / rect.width) - .5) * 7;
+
+                securityOrbit.style.transform =
+                    `perspective(800px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+
+            }
+        );
+
+
+        securityOrbit.addEventListener(
+            "mouseleave",
+            () => {
+
+                securityOrbit.style.transform =
+                    "perspective(800px) rotateX(0) rotateY(0)";
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>

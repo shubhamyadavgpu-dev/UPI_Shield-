@@ -1,0 +1,4141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Interactive UPI-Shield contextual payment threat simulator."
+    >
+
+    <title>UPI-Shield | Threat Demo</title>
+
+
+    <style>
+
+        :root{
+
+            --bg:#e9f0f7;
+            --surface:#e9f0f7;
+
+            --primary:#1769e0;
+            --primary-light:#4d91f5;
+            --primary-dark:#0e4fae;
+
+            --danger:#d94b55;
+            --warning:#df8b31;
+            --success:#15966b;
+
+            --text:#12263a;
+            --muted:#62798d;
+            --soft:#8294a6;
+
+            --light:#ffffff;
+
+            --dark-shadow:rgba(163,177,198,.65);
+            --light-shadow:rgba(255,255,255,.95);
+
+            --raised:
+                10px 10px 24px var(--dark-shadow),
+                -10px -10px 24px var(--light-shadow);
+
+            --small:
+                6px 6px 14px var(--dark-shadow),
+                -6px -6px 14px var(--light-shadow);
+
+            --inset:
+                inset 6px 6px 14px rgba(163,177,198,.55),
+                inset -6px -6px 14px rgba(255,255,255,.9);
+
+            --transition:.35s cubic-bezier(.2,.8,.2,1);
+
+        }
+
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+
+        body{
+
+            min-height:100vh;
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                "Segoe UI",
+                sans-serif;
+
+            color:var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(255,255,255,.8),
+                    transparent 27%
+                ),
+
+                radial-gradient(
+                    circle at 90% 35%,
+                    rgba(77,145,245,.11),
+                    transparent 30%
+                ),
+
+                var(--bg);
+
+            overflow-x:hidden;
+
+        }
+
+
+        button,
+        input,
+        textarea{
+            font-family:inherit;
+        }
+
+
+        button{
+            border:0;
+        }
+
+
+        a{
+            color:inherit;
+            text-decoration:none;
+        }
+
+
+        .container{
+
+            width:min(
+                1200px,
+                calc(100% - 42px)
+            );
+
+            margin:auto;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header{
+
+            position:fixed;
+
+            top:0;
+            left:0;
+
+            width:100%;
+
+            z-index:1000;
+
+            padding:17px 0;
+
+            transition:var(--transition);
+
+        }
+
+
+        header.scrolled{
+            padding:10px 0;
+        }
+
+
+        .navbar{
+
+            height:65px;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:space-between;
+
+            padding:
+                0 10px 0 14px;
+
+            border-radius:20px;
+
+            background:
+                rgba(233,240,247,.82);
+
+            backdrop-filter:blur(18px);
+
+            box-shadow:
+
+                7px 7px 18px rgba(163,177,198,.35),
+
+                -7px -7px 18px rgba(255,255,255,.75);
+
+            border:
+                1px solid rgba(255,255,255,.55);
+
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:11px;
+
+            font-weight:900;
+
+        }
+
+
+        .logo{
+
+            width:43px;
+            height:43px;
+
+            display:grid;
+
+            place-items:center;
+
+            border-radius:14px;
+
+            color:white;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    var(--primary-light),
+                    var(--primary)
+                );
+
+            box-shadow:
+
+                5px 5px 12px var(--dark-shadow),
+
+                -4px -4px 10px var(--light-shadow);
+
+            font-size:20px;
+
+        }
+
+
+        .brand-name{
+
+            font-size:17px;
+
+        }
+
+
+        .brand-name span{
+            color:var(--primary);
+        }
+
+
+        .brand-sub{
+
+            display:block;
+
+            margin-top:2px;
+
+            color:#8294a6;
+
+            font-size:8px;
+
+            letter-spacing:1.1px;
+
+            text-transform:uppercase;
+
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .nav-links{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:28px;
+
+        }
+
+
+        .nav-links a{
+
+            color:var(--muted);
+
+            font-size:11px;
+
+            font-weight:800;
+
+            position:relative;
+
+            transition:.25s ease;
+
+        }
+
+
+        .nav-links a:hover,
+        .nav-links a.active{
+
+            color:var(--primary);
+
+        }
+
+
+        .nav-links a.active::after{
+
+            content:"";
+
+            position:absolute;
+
+            width:6px;
+            height:6px;
+
+            border-radius:50%;
+
+            background:var(--primary);
+
+            left:50%;
+            bottom:-10px;
+
+            transform:translateX(-50%);
+
+        }
+
+
+        .nav-button{
+
+            padding:11px 17px;
+
+            border-radius:12px;
+
+            color:white!important;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--primary)
+                );
+
+            box-shadow:var(--small);
+
+        }
+
+
+        .menu{
+
+            display:none;
+
+            width:42px;
+            height:42px;
+
+            border-radius:13px;
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+            cursor:pointer;
+
+            font-size:19px;
+
+            color:var(--text);
+
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .page-header{
+
+            padding-top:145px;
+
+            padding-bottom:60px;
+
+            text-align:center;
+
+        }
+
+
+        .eyebrow{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            gap:8px;
+
+            padding:9px 14px;
+
+            border-radius:100px;
+
+            color:var(--primary);
+
+            box-shadow:var(--small);
+
+            font-size:10px;
+
+            font-weight:900;
+
+            text-transform:uppercase;
+
+            letter-spacing:1px;
+
+        }
+
+
+        .live-dot{
+
+            width:7px;
+            height:7px;
+
+            border-radius:50%;
+
+            background:var(--success);
+
+            box-shadow:
+                0 0 0 5px rgba(21,150,107,.1);
+
+            animation:pulse 2s infinite;
+
+        }
+
+
+        @keyframes pulse{
+
+            50%{
+
+                box-shadow:
+                    0 0 0 9px rgba(21,150,107,.04);
+
+            }
+
+        }
+
+
+        .page-header h1{
+
+            margin-top:22px;
+
+            font-size:
+                clamp(
+                    42px,
+                    5vw,
+                    65px
+                );
+
+            line-height:1;
+
+            letter-spacing:-3.5px;
+
+            font-weight:950;
+
+        }
+
+
+        .page-header h1 span{
+            color:var(--primary);
+        }
+
+
+        .page-header p{
+
+            max-width:650px;
+
+            margin:20px auto 0;
+
+            color:var(--muted);
+
+            font-size:14px;
+
+            line-height:1.8;
+
+        }
+
+
+        /* =====================================================
+           DEMO LAYOUT
+        ===================================================== */
+
+        .demo-wrapper{
+            padding-bottom:100px;
+        }
+
+
+        .demo-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                300px
+                minmax(0,1fr)
+                310px;
+
+            gap:22px;
+
+            align-items:start;
+
+        }
+
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .panel{
+
+            padding:23px;
+
+            border-radius:25px;
+
+            background:var(--surface);
+
+            box-shadow:var(--raised);
+
+        }
+
+
+        .panel-title{
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:space-between;
+
+            margin-bottom:19px;
+
+        }
+
+
+        .panel-title strong{
+
+            font-size:12px;
+
+            font-weight:900;
+
+        }
+
+
+        .panel-title span{
+
+            color:#8294a6;
+
+            font-size:8px;
+
+            font-weight:850;
+
+            text-transform:uppercase;
+
+            letter-spacing:.8px;
+
+        }
+
+
+        /* =====================================================
+           SCENARIOS
+        ===================================================== */
+
+        .scenarios{
+
+            display:grid;
+
+            gap:11px;
+
+        }
+
+
+        .scenario{
+
+            width:100%;
+
+            padding:15px;
+
+            display:flex;
+
+            align-items:center;
+
+            gap:12px;
+
+            text-align:left;
+
+            border-radius:16px;
+
+            color:var(--text);
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+            cursor:pointer;
+
+            transition:var(--transition);
+
+        }
+
+
+        .scenario:hover{
+
+            transform:translateY(-2px);
+
+        }
+
+
+        .scenario.active{
+
+            color:var(--primary);
+
+            box-shadow:var(--inset);
+
+        }
+
+
+        .scenario-icon{
+
+            width:39px;
+            height:39px;
+
+            display:grid;
+
+            place-items:center;
+
+            flex-shrink:0;
+
+            border-radius:12px;
+
+            box-shadow:var(--inset);
+
+        }
+
+
+        .scenario-text strong{
+
+            display:block;
+
+            font-size:10px;
+
+        }
+
+
+        .scenario-text span{
+
+            display:block;
+
+            margin-top:3px;
+
+            color:var(--muted);
+
+            font-size:8px;
+
+        }
+
+
+        /* =====================================================
+           CENTER SIMULATOR
+        ===================================================== */
+
+        .simulator{
+
+            min-height:640px;
+
+            padding:25px;
+
+            border-radius:28px;
+
+            background:var(--surface);
+
+            box-shadow:var(--raised);
+
+        }
+
+
+        .simulator-top{
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:space-between;
+
+            gap:15px;
+
+        }
+
+
+        .sim-title{
+
+            font-size:13px;
+
+            font-weight:900;
+
+        }
+
+
+        .analysis-state{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:7px;
+
+            padding:8px 11px;
+
+            border-radius:10px;
+
+            color:var(--primary);
+
+            background:var(--surface);
+
+            box-shadow:var(--inset);
+
+            font-size:8px;
+
+            font-weight:900;
+
+            text-transform:uppercase;
+
+            transition:.3s ease;
+
+        }
+
+
+        .analysis-state.backend{
+            color:var(--success);
+        }
+
+
+        .analysis-state.error{
+            color:var(--danger);
+        }
+
+
+        .state-dot{
+
+            width:6px;
+            height:6px;
+
+            border-radius:50%;
+
+            background:var(--primary);
+
+            animation:pulse 1.7s infinite;
+
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .message-card{
+
+            margin-top:21px;
+
+            padding:21px;
+
+            border-radius:21px;
+
+            box-shadow:var(--inset);
+
+        }
+
+
+        .message-meta{
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:space-between;
+
+            gap:10px;
+
+            color:#8294a6;
+
+            font-size:8px;
+
+            font-weight:800;
+
+        }
+
+
+        .message-body{
+
+            margin-top:16px;
+
+            font-size:13px;
+
+            line-height:1.75;
+
+            font-weight:650;
+
+        }
+
+
+        .highlight{
+
+            color:var(--danger);
+
+            background:rgba(217,75,85,.07);
+
+            border-radius:4px;
+
+            padding:2px 4px;
+
+        }
+
+
+        /* =====================================================
+           USER CONTEXT
+        ===================================================== */
+
+        .user-context-card{
+
+            margin-top:20px;
+
+            padding:19px;
+
+            border-radius:20px;
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+            transition:var(--transition);
+
+        }
+
+
+        .user-context-card:focus-within{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+                8px 8px 18px rgba(163,177,198,.45),
+                -7px -7px 17px rgba(255,255,255,.85);
+
+        }
+
+
+        .user-context-header{
+
+            display:flex;
+
+            align-items:flex-start;
+
+            justify-content:space-between;
+
+            gap:15px;
+
+        }
+
+
+        .user-context-header strong{
+
+            display:block;
+
+            font-size:10px;
+
+            font-weight:900;
+
+        }
+
+
+        .user-context-header span{
+
+            display:block;
+
+            margin-top:5px;
+
+            color:var(--muted);
+
+            font-size:8px;
+
+            line-height:1.5;
+
+        }
+
+
+        .context-badge{
+
+            padding:7px 9px;
+
+            border-radius:8px;
+
+            color:var(--primary);
+
+            box-shadow:var(--inset);
+
+            font-size:7px;
+
+            font-weight:900;
+
+            letter-spacing:.6px;
+
+            white-space:nowrap;
+
+        }
+
+
+        #userContext{
+
+            width:100%;
+
+            min-height:105px;
+
+            margin-top:14px;
+
+            padding:14px;
+
+            resize:vertical;
+
+            border:0;
+
+            outline:0;
+
+            border-radius:14px;
+
+            background:var(--surface);
+
+            color:var(--text);
+
+            box-shadow:var(--inset);
+
+            font-size:10px;
+
+            line-height:1.6;
+
+        }
+
+
+        #userContext::placeholder{
+            color:#91a2b1;
+        }
+
+
+        .context-footer{
+
+            display:flex;
+
+            justify-content:space-between;
+
+            gap:10px;
+
+            margin-top:9px;
+
+        }
+
+
+        .context-footer span{
+
+            color:var(--soft);
+
+            font-size:7px;
+
+            line-height:1.4;
+
+        }
+
+
+        /* =====================================================
+           PAYMENT DETAILS
+        ===================================================== */
+
+        .payment-details{
+
+            display:grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:11px;
+
+            margin-top:12px;
+
+        }
+
+
+        .input-group{
+
+            padding:13px;
+
+            border-radius:15px;
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+            transition:var(--transition);
+
+        }
+
+
+        .input-group:focus-within{
+
+            transform:translateY(-2px);
+
+        }
+
+
+        .input-group label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            color:var(--muted);
+
+            font-size:7px;
+
+            font-weight:900;
+
+            text-transform:uppercase;
+
+            letter-spacing:.6px;
+
+        }
+
+
+        .input-group input{
+
+            width:100%;
+
+            border:0;
+
+            outline:0;
+
+            padding:10px;
+
+            border-radius:10px;
+
+            background:var(--surface);
+
+            color:var(--text);
+
+            box-shadow:var(--inset);
+
+            font-size:9px;
+
+        }
+
+
+        .input-group input::placeholder{
+            color:#9aaab7;
+        }
+
+
+        /* =====================================================
+           ANALYZE BUTTON
+        ===================================================== */
+
+        .analyze-button{
+
+            width:100%;
+
+            min-height:48px;
+
+            margin-top:14px;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            gap:9px;
+
+            border-radius:14px;
+
+            color:#fff;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--primary)
+                );
+
+            box-shadow:
+
+                7px 7px 15px rgba(163,177,198,.5),
+
+                -5px -5px 12px rgba(255,255,255,.85);
+
+            font-size:9px;
+
+            font-weight:900;
+
+            cursor:pointer;
+
+            transition:var(--transition);
+
+        }
+
+
+        .analyze-button:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+
+                9px 9px 18px rgba(163,177,198,.55),
+
+                -6px -6px 14px rgba(255,255,255,.9);
+
+        }
+
+
+        .analyze-button:active{
+
+            transform:translateY(0);
+
+        }
+
+
+        .analyze-button:disabled{
+
+            opacity:.7;
+
+            cursor:not-allowed;
+
+            transform:none;
+
+        }
+
+
+        .analyze-loader{
+            display:none;
+        }
+
+
+        .analyze-button.loading
+        .analyze-loader{
+
+            display:inline-block;
+
+        }
+
+
+        .analyze-button.loading
+        #analyzeButtonText{
+
+            display:none;
+
+        }
+
+
+        /* =====================================================
+           SIGNALS
+        ===================================================== */
+
+        .signal-title{
+
+            margin-top:24px;
+
+            font-size:10px;
+
+            font-weight:900;
+
+            text-transform:uppercase;
+
+            letter-spacing:.9px;
+
+        }
+
+
+        .signals{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap:11px;
+
+            margin-top:13px;
+
+        }
+
+
+        .signal{
+
+            padding:15px;
+
+            border-radius:16px;
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+            transition:.4s;
+
+        }
+
+
+        .signal.detected{
+
+            animation:signalPop .5s ease;
+
+        }
+
+
+        @keyframes signalPop{
+
+            from{
+
+                transform:scale(.94);
+
+                opacity:.5;
+
+            }
+
+            to{
+
+                transform:scale(1);
+
+                opacity:1;
+
+            }
+
+        }
+
+
+        .signal-top{
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+        }
+
+
+        .signal-name{
+
+            font-size:9px;
+
+            font-weight:850;
+
+        }
+
+
+        .signal-score{
+
+            font-size:8px;
+
+            font-weight:900;
+
+        }
+
+
+        .signal-bar{
+
+            height:5px;
+
+            margin-top:10px;
+
+            border-radius:20px;
+
+            background:#dfe6ed;
+
+            overflow:hidden;
+
+        }
+
+
+        .signal-fill{
+
+            width:0;
+
+            height:100%;
+
+            border-radius:20px;
+
+            transition:width .7s ease;
+
+        }
+
+
+        /* =====================================================
+           RISK
+        ===================================================== */
+
+        .risk-card{
+
+            margin-top:18px;
+
+            padding:19px;
+
+            border-radius:20px;
+
+            box-shadow:var(--inset);
+
+        }
+
+
+        .risk-head{
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+        }
+
+
+        .risk-head span{
+
+            font-size:9px;
+
+            font-weight:900;
+
+        }
+
+
+        .risk-number{
+
+            font-size:23px;
+
+            font-weight:950;
+
+            transition:.3s ease;
+
+        }
+
+
+        .risk-track{
+
+            height:8px;
+
+            margin-top:12px;
+
+            border-radius:20px;
+
+            background:#dfe6ed;
+
+            box-shadow:
+                inset 2px 2px 5px rgba(163,177,198,.4);
+
+            overflow:hidden;
+
+        }
+
+
+        .risk-fill{
+
+            width:0;
+
+            height:100%;
+
+            border-radius:20px;
+
+            transition:
+                width 1s cubic-bezier(.2,.8,.2,1),
+                background .4s;
+
+        }
+
+
+        .risk-status{
+
+            margin-top:11px;
+
+            display:flex;
+
+            align-items:center;
+
+            gap:7px;
+
+            font-size:9px;
+
+            font-weight:850;
+
+        }
+
+
+        .status-dot{
+
+            width:7px;
+            height:7px;
+
+            border-radius:50%;
+
+        }
+
+
+        /* =====================================================
+           INTERVENTION
+        ===================================================== */
+
+        .intervention{
+
+            margin-top:18px;
+
+            padding:16px;
+
+            display:flex;
+
+            gap:11px;
+
+            border-radius:17px;
+
+            background:rgba(217,75,85,.055);
+
+            box-shadow:var(--small);
+
+        }
+
+
+        .intervention-icon{
+
+            width:36px;
+            height:36px;
+
+            display:grid;
+
+            place-items:center;
+
+            flex-shrink:0;
+
+            border-radius:11px;
+
+            color:white;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    #e76a73,
+                    var(--danger)
+                );
+
+        }
+
+
+        .intervention strong{
+
+            display:block;
+
+            color:var(--danger);
+
+            font-size:10px;
+
+        }
+
+
+        .intervention span{
+
+            display:block;
+
+            margin-top:3px;
+
+            color:var(--muted);
+
+            font-size:8px;
+
+            line-height:1.5;
+
+        }
+
+
+        /* =====================================================
+           RIGHT ANALYSIS
+        ===================================================== */
+
+        .analysis{
+
+            display:grid;
+
+            gap:16px;
+
+        }
+
+
+        .metric{
+
+            padding:17px;
+
+            border-radius:17px;
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+            transition:var(--transition);
+
+        }
+
+
+        .metric:hover{
+
+            transform:translateY(-2px);
+
+        }
+
+
+        .metric-label{
+
+            color:#8294a6;
+
+            font-size:8px;
+
+            font-weight:850;
+
+            text-transform:uppercase;
+
+            letter-spacing:.7px;
+
+        }
+
+
+        .metric-value{
+
+            margin-top:7px;
+
+            font-size:20px;
+
+            font-weight:950;
+
+            transition:.3s ease;
+
+        }
+
+
+        .metric-sub{
+
+            margin-top:4px;
+
+            color:var(--muted);
+
+            font-size:8px;
+
+        }
+
+
+        /* =====================================================
+           EXPLANATION
+        ===================================================== */
+
+        .explanation{
+
+            padding:18px;
+
+            border-radius:18px;
+
+            box-shadow:var(--inset);
+
+        }
+
+
+        .explanation h4{
+
+            font-size:10px;
+
+            font-weight:900;
+
+        }
+
+
+        .explanation p{
+
+            margin-top:9px;
+
+            color:var(--muted);
+
+            font-size:9px;
+
+            line-height:1.7;
+
+        }
+
+
+        .reason-list{
+
+            margin-top:12px;
+
+            display:grid;
+
+            gap:9px;
+
+        }
+
+
+        .reason{
+
+            display:flex;
+
+            gap:8px;
+
+            font-size:8px;
+
+            color:var(--muted);
+
+            line-height:1.5;
+
+            animation:reasonIn .35s ease both;
+
+        }
+
+
+        @keyframes reasonIn{
+
+            from{
+
+                opacity:0;
+
+                transform:translateX(-5px);
+
+            }
+
+            to{
+
+                opacity:1;
+
+                transform:translateX(0);
+
+            }
+
+        }
+
+
+        .reason b{
+
+            width:17px;
+            height:17px;
+
+            display:grid;
+
+            place-items:center;
+
+            flex-shrink:0;
+
+            border-radius:50%;
+
+            color:var(--danger);
+
+            background:rgba(217,75,85,.08);
+
+            font-size:8px;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        .reset{
+
+            width:100%;
+
+            min-height:44px;
+
+            margin-top:2px;
+
+            border-radius:13px;
+
+            color:var(--text);
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+            font-size:9px;
+
+            font-weight:850;
+
+            cursor:pointer;
+
+            transition:var(--transition);
+
+        }
+
+
+        .reset:hover{
+
+            color:var(--primary);
+
+            transform:translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           DEMO NOTE
+        ===================================================== */
+
+        .demo-note{
+
+            margin-top:22px;
+
+            padding:20px 25px;
+
+            display:flex;
+
+            align-items:center;
+
+            gap:13px;
+
+            border-radius:19px;
+
+            background:var(--surface);
+
+            box-shadow:var(--small);
+
+        }
+
+
+        .note-icon{
+
+            width:40px;
+            height:40px;
+
+            display:grid;
+
+            place-items:center;
+
+            flex-shrink:0;
+
+            border-radius:12px;
+
+            color:var(--primary);
+
+            box-shadow:var(--inset);
+
+        }
+
+
+        .demo-note strong{
+
+            display:block;
+
+            font-size:10px;
+
+        }
+
+
+        .demo-note span{
+
+            display:block;
+
+            margin-top:3px;
+
+            color:var(--muted);
+
+            font-size:9px;
+
+            line-height:1.5;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer{
+            padding:30px 0 38px;
+        }
+
+
+        .footer{
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:space-between;
+
+            gap:20px;
+
+        }
+
+
+        .footer-brand{
+
+            font-size:13px;
+
+            font-weight:900;
+
+        }
+
+
+        .footer-brand span{
+            color:var(--primary);
+        }
+
+
+        .footer-copy{
+
+            margin-top:5px;
+
+            color:#8294a6;
+
+            font-size:9px;
+
+        }
+
+
+        .footer-links{
+
+            display:flex;
+
+            gap:20px;
+
+        }
+
+
+        .footer-links a{
+
+            color:var(--muted);
+
+            font-size:10px;
+
+            font-weight:750;
+
+            transition:.25s ease;
+
+        }
+
+
+        .footer-links a:hover{
+            color:var(--primary);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width:1050px){
+
+            .demo-grid{
+
+                grid-template-columns:
+                    250px
+                    minmax(0,1fr);
+
+            }
+
+
+            .analysis{
+
+                grid-column:2;
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+
+            .reset{
+
+                grid-column:1/-1;
+
+            }
+
+        }
+
+
+        @media(max-width:760px){
+
+            .container{
+
+                width:
+                    calc(100% - 28px);
+
+            }
+
+
+            .nav-links{
+
+                display:none;
+
+                position:fixed;
+
+                top:91px;
+
+                left:14px;
+                right:14px;
+
+                flex-direction:column;
+
+                gap:5px;
+
+                padding:17px;
+
+                border-radius:22px;
+
+                background:
+                    rgba(233,240,247,.97);
+
+                box-shadow:var(--raised);
+
+            }
+
+
+            .nav-links.active{
+                display:flex;
+            }
+
+
+            .nav-links a{
+                padding:13px;
+            }
+
+
+            .menu{
+
+                display:grid;
+
+                place-items:center;
+
+            }
+
+
+            .page-header{
+
+                padding-top:125px;
+
+            }
+
+
+            .page-header h1{
+
+                font-size:45px;
+
+                letter-spacing:-2.5px;
+
+            }
+
+
+            .demo-grid{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .analysis{
+
+                grid-column:auto;
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .simulator{
+
+                min-height:auto;
+
+            }
+
+
+            .signals{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .payment-details{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .footer{
+
+                flex-direction:column;
+
+                align-items:flex-start;
+
+            }
+
+        }
+
+
+        @media(max-width:450px){
+
+            .page-header h1{
+
+                font-size:39px;
+
+            }
+
+
+            .simulator{
+
+                padding:19px;
+
+            }
+
+
+            .user-context-header{
+
+                flex-direction:column;
+
+            }
+
+
+            .context-badge{
+
+                align-self:flex-start;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header id="header">
+
+        <div class="container">
+
+            <nav class="navbar">
+
+                <a href="index.html" class="brand">
+
+                    <div class="logo">
+                        🛡
+                    </div>
+
+                    <div>
+
+                        <div class="brand-name">
+                            UPI-<span>Shield</span>
+                        </div>
+
+                        <span class="brand-sub">
+                            Contextual Payment Security
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <div
+                    class="nav-links"
+                    id="navLinks"
+                >
+
+                    <a href="index.html">
+                        Home
+                    </a>
+
+                    <a href="problem.html">
+                        Problem
+                    </a>
+
+                    <a
+                        href="threat-demo.html"
+                        class="active"
+                    >
+                        Threat Demo
+                    </a>
+
+                    <a href="how-it-works.html">
+                        How It Works
+                    </a>
+
+                    <a href="security.html">
+                        Security
+                    </a>
+
+                    <a
+                        href="protect.html"
+                        class="nav-button"
+                    >
+                        Protect Payment →
+                    </a>
+
+                </div>
+
+
+                <button
+                    class="menu"
+                    id="menu"
+                    aria-label="Open navigation"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ===================================================== -->
+
+    <section class="page-header">
+
+        <div class="container">
+
+            <div class="eyebrow">
+
+                <span class="live-dot"></span>
+
+                Interactive threat simulator
+
+            </div>
+
+
+            <h1>
+
+                See the
+                <span>threat</span>
+                before the payment.
+
+            </h1>
+
+
+            <p>
+
+                Choose a real-world social-engineering scenario.
+                Add the user's surrounding context and let
+                UPI-Shield calculate an explainable contextual
+                risk score.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DEMO
+    ===================================================== -->
+
+    <main class="demo-wrapper">
+
+        <div class="container">
+
+            <div class="demo-grid">
+
+
+                <!-- =================================================
+                     LEFT: SCENARIOS
+                ================================================= -->
+
+                <aside class="panel">
+
+                    <div class="panel-title">
+
+                        <strong>
+                            Choose Scenario
+                        </strong>
+
+                        <span>
+                            Simulation
+                        </span>
+
+                    </div>
+
+
+                    <div class="scenarios">
+
+
+                        <button
+                            type="button"
+                            class="scenario active"
+                            data-scenario="electricity"
+                        >
+
+                            <div class="scenario-icon">
+                                ⚡
+                            </div>
+
+                            <div class="scenario-text">
+
+                                <strong>
+                                    Electricity scam
+                                </strong>
+
+                                <span>
+                                    Fake disconnection threat
+                                </span>
+
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="scenario"
+                            data-scenario="bank"
+                        >
+
+                            <div class="scenario-icon">
+                                🏦
+                            </div>
+
+                            <div class="scenario-text">
+
+                                <strong>
+                                    Fake bank officer
+                                </strong>
+
+                                <span>
+                                    Account verification scam
+                                </span>
+
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="scenario"
+                            data-scenario="delivery"
+                        >
+
+                            <div class="scenario-icon">
+                                📦
+                            </div>
+
+                            <div class="scenario-text">
+
+                                <strong>
+                                    Delivery scam
+                                </strong>
+
+                                <span>
+                                    Fake parcel payment
+                                </span>
+
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="scenario"
+                            data-scenario="police"
+                        >
+
+                            <div class="scenario-icon">
+                                ⚠
+                            </div>
+
+                            <div class="scenario-text">
+
+                                <strong>
+                                    Authority impersonation
+                                </strong>
+
+                                <span>
+                                    Fear-based coercion
+                                </span>
+
+                            </div>
+
+                        </button>
+
+
+                    </div>
+
+                </aside>
+
+
+                <!-- =================================================
+                     CENTER: SIMULATOR
+                ================================================= -->
+
+                <section class="simulator">
+
+
+                    <div class="simulator-top">
+
+                        <div class="sim-title">
+                            Live Context Analysis
+                        </div>
+
+
+                        <div
+                            class="analysis-state"
+                            id="analysisState"
+                        >
+
+                            <span class="state-dot"></span>
+
+                            Ready
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="message-card">
+
+                        <div class="message-meta">
+
+                            <span>
+                                INCOMING MESSAGE
+                            </span>
+
+                            <span id="sender">
+                                Unknown Sender
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="message-body"
+                            id="message"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         USER CONTEXT
+                    ================================================= -->
+
+                    <div class="user-context-card">
+
+                        <div class="user-context-header">
+
+                            <div>
+
+                                <strong>
+                                    External User Information
+                                </strong>
+
+                                <span>
+                                    Add any information that may
+                                    change the payment context.
+                                </span>
+
+                            </div>
+
+
+                            <div class="context-badge">
+                                TEXT ONLY
+                            </div>
+
+                        </div>
+
+
+                        <textarea
+                            id="userContext"
+                            maxlength="3000"
+                            placeholder="Example: I received this message after someone called me claiming to be from the electricity department. I have not requested any bill correction or payment..."
+                        ></textarea>
+
+
+                        <div class="context-footer">
+
+                            <span>
+                                This information is analyzed as
+                                contextual evidence.
+                            </span>
+
+                            <span id="contextCounter">
+                                0 / 3000
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PAYMENT DETAILS
+                    ================================================= -->
+
+                    <div class="payment-details">
+
+
+                        <div class="input-group">
+
+                            <label for="paymentAmount">
+                                Payment Amount
+                            </label>
+
+                            <input
+                                type="number"
+                                id="paymentAmount"
+                                min="0"
+                                step="0.01"
+                                placeholder="₹ 2,500"
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="recipient">
+                                Recipient / UPI ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="recipient"
+                                maxlength="200"
+                                placeholder="example@upi"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ANALYZE BUTTON
+                    ================================================= -->
+
+                    <button
+                        type="button"
+                        class="analyze-button"
+                        id="analyzeButton"
+                    >
+
+                        <span id="analyzeButtonText">
+                            Analyze Threat Context
+                        </span>
+
+                        <span class="analyze-loader">
+                            Analyzing...
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <!-- SIGNALS -->
+
+                    <div class="signal-title">
+                        Detected Contextual Signals
+                    </div>
+
+
+                    <div class="signals">
+
+
+                        <div class="signal">
+
+                            <div class="signal-top">
+
+                                <span class="signal-name">
+                                    Urgency
+                                </span>
+
+                                <span
+                                    class="signal-score"
+                                    id="urgencyScore"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div class="signal-bar">
+
+                                <div
+                                    class="signal-fill"
+                                    id="urgencyFill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="signal">
+
+                            <div class="signal-top">
+
+                                <span class="signal-name">
+                                    Threat language
+                                </span>
+
+                                <span
+                                    class="signal-score"
+                                    id="threatScore"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div class="signal-bar">
+
+                                <div
+                                    class="signal-fill"
+                                    id="threatFill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="signal">
+
+                            <div class="signal-top">
+
+                                <span class="signal-name">
+                                    Impersonation
+                                </span>
+
+                                <span
+                                    class="signal-score"
+                                    id="impersonationScore"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div class="signal-bar">
+
+                                <div
+                                    class="signal-fill"
+                                    id="impersonationFill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="signal">
+
+                            <div class="signal-top">
+
+                                <span class="signal-name">
+                                    Context mismatch
+                                </span>
+
+                                <span
+                                    class="signal-score"
+                                    id="contextScore"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div class="signal-bar">
+
+                                <div
+                                    class="signal-fill"
+                                    id="contextFill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- RISK -->
+
+                    <div class="risk-card">
+
+                        <div class="risk-head">
+
+                            <span>
+                                Overall contextual risk
+                            </span>
+
+                            <span
+                                class="risk-number"
+                                id="riskNumber"
+                            >
+                                0
+                            </span>
+
+                        </div>
+
+
+                        <div class="risk-track">
+
+                            <div
+                                class="risk-fill"
+                                id="riskFill"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="risk-status">
+
+                            <span
+                                class="status-dot"
+                                id="statusDot"
+                            ></span>
+
+                            <span id="riskStatus">
+                                Ready for analysis
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- INTERVENTION -->
+
+                    <div class="intervention">
+
+                        <div class="intervention-icon">
+                            !
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                UPI-Shield Intervention
+                            </strong>
+
+                            <span id="interventionText">
+
+                                Add context and analyze the request
+                                before authorizing the payment.
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     RIGHT: EXPLANATION
+                ================================================= -->
+
+                <aside class="analysis">
+
+
+                    <div class="metric">
+
+                        <div class="metric-label">
+                            Threat classification
+                        </div>
+
+                        <div
+                            class="metric-value"
+                            id="classification"
+                        >
+                            Ready
+                        </div>
+
+                        <div class="metric-sub">
+                            Contextual NLP assessment
+                        </div>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <div class="metric-label">
+                            Confidence
+                        </div>
+
+                        <div
+                            class="metric-value"
+                            id="confidence"
+                        >
+                            0%
+                        </div>
+
+                        <div class="metric-sub">
+                            Signal agreement
+                        </div>
+
+                    </div>
+
+
+                    <div class="explanation">
+
+                        <h4>
+                            Why is this risky?
+                        </h4>
+
+
+                        <p id="explanationText">
+
+                            Select a scenario, optionally add
+                            external user information and run
+                            the contextual analysis.
+
+                        </p>
+
+
+                        <div
+                            class="reason-list"
+                            id="reasonList"
+                        ></div>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="reset"
+                        id="reset"
+                    >
+                        ↻ Reset Simulation
+                    </button>
+
+
+                </aside>
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="demo-note">
+
+                <div class="note-icon">
+                    🛡
+                </div>
+
+                <div>
+
+                    <strong>
+                        The goal isn't to block every unusual payment.
+                    </strong>
+
+                    <span>
+
+                        UPI-Shield is designed to identify contextual
+                        risk and provide an informed intervention
+                        before the user authorizes a potentially
+                        fraudulent transaction.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+        <div class="container footer">
+
+            <div>
+
+                <div class="footer-brand">
+                    UPI-<span>Shield</span>
+                </div>
+
+                <div class="footer-copy">
+                    Contextual Payment Security • GFG Hackathon
+                </div>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="problem.html">
+                    Problem
+                </a>
+
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
+
+                <a href="security.html">
+                    Security
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        "use strict";
+
+
+        /* =====================================================
+           API
+        ===================================================== */
+
+        const API_BASE_URL =
+            "http://127.0.0.1:5000";
+
+        const ANALYZE_ENDPOINT =
+            `${API_BASE_URL}/api/analyze`;
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        const header =
+            document.getElementById("header");
+
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                header.classList.toggle(
+                    "scrolled",
+                    window.scrollY > 30
+                );
+
+            }
+        );
+
+
+        const menu =
+            document.getElementById("menu");
+
+        const nav =
+            document.getElementById("navLinks");
+
+
+        menu.addEventListener(
+            "click",
+            () => {
+
+                nav.classList.toggle(
+                    "active"
+                );
+
+                menu.textContent =
+                    nav.classList.contains("active")
+                        ? "×"
+                        : "☰";
+
+            }
+        );
+
+
+        /* =====================================================
+           SCENARIO DATA
+        ===================================================== */
+
+        const scenarios = {
+
+            electricity: {
+
+                sender:"+91 • Unknown",
+
+                message:
+                `⚠ Your electricity connection is scheduled for
+                disconnection today.
+
+                Pay <span class="highlight">₹2,500 immediately</span>
+                through UPI to avoid service interruption.
+
+                Do not delay.`,
+
+                signals:{
+                    urgency:96,
+                    threat:91,
+                    impersonation:74,
+                    context:88
+                },
+
+                risk:91,
+
+                classification:"High Risk",
+
+                confidence:94,
+
+                status:"Intervention required",
+
+                intervention:
+                    "Do not authorize immediately. Independently verify the electricity provider before making any payment.",
+
+                reasons:[
+                    "Artificial urgency detected",
+                    "Threat of service disruption",
+                    "Unknown payment instruction",
+                    "Strong contextual mismatch"
+                ]
+
+            },
+
+
+            bank: {
+
+                sender:"Bank Support • Unverified",
+
+                message:
+                `Your bank account requires immediate verification.
+
+                Failure to complete verification within
+                <span class="highlight">15 minutes</span>
+                may result in account restrictions.
+
+                Transfer ₹8,000 to the verification UPI ID.`,
+
+                signals:{
+                    urgency:93,
+                    threat:83,
+                    impersonation:97,
+                    context:90
+                },
+
+                risk:94,
+
+                classification:"Critical Risk",
+
+                confidence:97,
+
+                status:"Payment should be paused",
+
+                intervention:
+                    "Never transfer money for account verification. Contact the bank through its official channel.",
+
+                reasons:[
+                    "Bank impersonation indicators",
+                    "Artificial time pressure",
+                    "Request for payment to verify account",
+                    "Unverified sender identity"
+                ]
+
+            },
+
+
+            delivery: {
+
+                sender:"Delivery Desk • Unknown",
+
+                message:
+                `Your parcel could not be delivered.
+
+                Pay a small <span class="highlight">₹49 processing fee</span>
+                now through this UPI ID to reschedule delivery.
+
+                Your parcel will be returned today.`,
+
+                signals:{
+                    urgency:78,
+                    threat:63,
+                    impersonation:81,
+                    context:72
+                },
+
+                risk:76,
+
+                classification:"High Risk",
+
+                confidence:89,
+
+                status:"Verify before paying",
+
+                intervention:
+                    "Check the delivery status through the official courier application or website.",
+
+                reasons:[
+                    "Unexpected payment request",
+                    "Unverified delivery sender",
+                    "Time pressure",
+                    "Payment destination mismatch"
+                ]
+
+            },
+
+
+            police: {
+
+                sender:"Authority Notice • Unknown",
+
+                message:
+                `Your number has been linked to a suspicious case.
+
+                You must immediately pay
+                <span class="highlight">₹12,000</span>
+                for verification or legal action may follow.
+
+                Keep this communication confidential.`,
+
+                signals:{
+                    urgency:99,
+                    threat:98,
+                    impersonation:96,
+                    context:94
+                },
+
+                risk:99,
+
+                classification:"Critical Risk",
+
+                confidence:99,
+
+                status:"Strong intervention required",
+
+                intervention:
+                    "Stop the transaction. Do not send money under threats or authority impersonation.",
+
+                reasons:[
+                    "Extreme coercive language",
+                    "Authority impersonation",
+                    "Immediate payment demand",
+                    "Request for secrecy"
+                ]
+
+            }
+
+        };
+
+
+        /* =====================================================
+           DOM ELEMENTS
+        ===================================================== */
+
+        const scenarioButtons =
+            document.querySelectorAll(
+                ".scenario"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const sender =
+            document.getElementById(
+                "sender"
+            );
+
+
+        const riskNumber =
+            document.getElementById(
+                "riskNumber"
+            );
+
+
+        const riskFill =
+            document.getElementById(
+                "riskFill"
+            );
+
+
+        const riskStatus =
+            document.getElementById(
+                "riskStatus"
+            );
+
+
+        const statusDot =
+            document.getElementById(
+                "statusDot"
+            );
+
+
+        const classification =
+            document.getElementById(
+                "classification"
+            );
+
+
+        const confidence =
+            document.getElementById(
+                "confidence"
+            );
+
+
+        const interventionText =
+            document.getElementById(
+                "interventionText"
+            );
+
+
+        const explanationText =
+            document.getElementById(
+                "explanationText"
+            );
+
+
+        const reasonList =
+            document.getElementById(
+                "reasonList"
+            );
+
+
+        const userContext =
+            document.getElementById(
+                "userContext"
+            );
+
+
+        const contextCounter =
+            document.getElementById(
+                "contextCounter"
+            );
+
+
+        const paymentAmount =
+            document.getElementById(
+                "paymentAmount"
+            );
+
+
+        const recipient =
+            document.getElementById(
+                "recipient"
+            );
+
+
+        const analyzeButton =
+            document.getElementById(
+                "analyzeButton"
+            );
+
+
+        const analyzeButtonText =
+            document.getElementById(
+                "analyzeButtonText"
+            );
+
+
+        const analysisState =
+            document.getElementById(
+                "analysisState"
+            );
+
+
+        /* =====================================================
+           CONTEXT COUNTER
+        ===================================================== */
+
+        userContext.addEventListener(
+            "input",
+            () => {
+
+                contextCounter.textContent =
+                    `${userContext.value.length} / 3000`;
+
+            }
+        );
+
+
+        /* =====================================================
+           UPDATE SIGNAL
+        ===================================================== */
+
+        function updateSignal(
+            name,
+            value
+        ){
+
+            const score =
+                document.getElementById(
+                    name + "Score"
+                );
+
+
+            const fill =
+                document.getElementById(
+                    name + "Fill"
+                );
+
+
+            if(!score || !fill){
+                return;
+            }
+
+
+            const safeValue =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(value) || 0
+                    )
+                );
+
+
+            score.textContent =
+                safeValue + "%";
+
+
+            requestAnimationFrame(
+                () => {
+
+                    fill.style.width =
+                        safeValue + "%";
+
+                }
+            );
+
+
+            if(safeValue >= 90){
+
+                fill.style.background =
+                    "linear-gradient(90deg,#df8b31,#d94b55)";
+
+                score.style.color =
+                    "var(--danger)";
+
+            }
+
+            else if(safeValue >= 70){
+
+                fill.style.background =
+                    "var(--warning)";
+
+                score.style.color =
+                    "var(--warning)";
+
+            }
+
+            else{
+
+                fill.style.background =
+                    "var(--success)";
+
+                score.style.color =
+                    "var(--success)";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           ANALYSIS STATE
+        ===================================================== */
+
+        function setAnalysisState(
+            type
+        ){
+
+            analysisState.classList.remove(
+                "backend",
+                "error"
+            );
+
+
+            if(type === "backend"){
+
+                analysisState.classList.add(
+                    "backend"
+                );
+
+                analysisState.innerHTML =
+                    `<span class="state-dot"></span>
+                     Analysis complete`;
+
+            }
+
+            else if(type === "error"){
+
+                analysisState.classList.add(
+                    "error"
+                );
+
+                analysisState.innerHTML =
+                    `<span class="state-dot"></span>
+                     Backend unavailable`;
+
+            }
+
+            else{
+
+                analysisState.innerHTML =
+                    `<span class="state-dot"></span>
+                     Ready`;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           LOADING STATE
+        ===================================================== */
+
+        function setLoading(
+            loading
+        ){
+
+            analyzeButton.disabled =
+                loading;
+
+
+            analyzeButton.classList.toggle(
+                "loading",
+                loading
+            );
+
+
+            if(loading){
+
+                analyzeButtonText.textContent =
+                    "Analyzing...";
+
+            }
+
+            else{
+
+                analyzeButtonText.textContent =
+                    "Analyze Threat Context";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           UPDATE RISK
+        ===================================================== */
+
+        function updateRiskUI(
+            risk,
+            riskLevel,
+            confidenceValue,
+            signals,
+            reasons,
+            recommendation
+        ){
+
+            const safeRisk =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(risk) || 0
+                    )
+                );
+
+
+            riskNumber.textContent =
+                safeRisk;
+
+
+            riskFill.style.width =
+                safeRisk + "%";
+
+
+            if(safeRisk >= 90){
+
+                riskFill.style.background =
+                    "linear-gradient(90deg,#df8b31,#d94b55)";
+
+                statusDot.style.background =
+                    "var(--danger)";
+
+                riskNumber.style.color =
+                    "var(--danger)";
+
+            }
+
+            else if(safeRisk >= 70){
+
+                riskFill.style.background =
+                    "linear-gradient(90deg,#df8b31,#df8b31)";
+
+                statusDot.style.background =
+                    "var(--warning)";
+
+                riskNumber.style.color =
+                    "var(--warning)";
+
+            }
+
+            else{
+
+                riskFill.style.background =
+                    "linear-gradient(90deg,#4d91f5,#1769e0)";
+
+                statusDot.style.background =
+                    "var(--success)";
+
+                riskNumber.style.color =
+                    "var(--success)";
+
+            }
+
+
+            riskStatus.textContent =
+                riskLevel;
+
+
+            classification.textContent =
+                riskLevel
+                    .toLowerCase()
+                    .replace(
+                        /\b\w/g,
+                        char =>
+                            char.toUpperCase()
+                    );
+
+
+            confidence.textContent =
+                `${confidenceValue}%`;
+
+
+            explanationText.textContent =
+                "UPI-Shield analyzed the payment request together with the external user context and identified contextual signals that influence the risk of social engineering or coercion.";
+
+
+            reasonList.innerHTML =
+                "";
+
+
+            if(
+                Array.isArray(reasons) &&
+                reasons.length > 0
+            ){
+
+                reasons.forEach(
+                    reason => {
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
+
+                        div.className =
+                            "reason";
+
+
+                        const icon =
+                            document.createElement(
+                                "b"
+                            );
+
+                        icon.textContent =
+                            "!";
+
+
+                        const text =
+                            document.createElement(
+                                "span"
+                            );
+
+                        text.textContent =
+                            reason;
+
+
+                        div.appendChild(
+                            icon
+                        );
+
+                        div.appendChild(
+                            text
+                        );
+
+                        reasonList.appendChild(
+                            div
+                        );
+
+                    }
+                );
+
+            }
+
+
+            interventionText.textContent =
+                recommendation ||
+                "Verify the request independently before authorizing the payment.";
+
+        }
+
+
+        /* =====================================================
+           LOAD SCENARIO
+        ===================================================== */
+
+        function loadScenario(
+            key
+        ){
+
+            const data =
+                scenarios[key];
+
+
+            if(!data){
+                return;
+            }
+
+
+            message.innerHTML =
+                data.message;
+
+
+            sender.textContent =
+                data.sender;
+
+
+            updateSignal(
+                "urgency",
+                data.signals.urgency
+            );
+
+
+            updateSignal(
+                "threat",
+                data.signals.threat
+            );
+
+
+            updateSignal(
+                "impersonation",
+                data.signals.impersonation
+            );
+
+
+            updateSignal(
+                "context",
+                data.signals.context
+            );
+
+
+            riskNumber.textContent =
+                "0";
+
+
+            riskFill.style.width =
+                "0%";
+
+
+            setTimeout(
+                () => {
+
+                    updateRiskUI(
+                        data.risk,
+                        data.classification,
+                        data.confidence,
+                        data.signals,
+                        data.reasons,
+                        data.intervention
+                    );
+
+
+                    riskStatus.textContent =
+                        data.status;
+
+                },
+                250
+            );
+
+
+            explanationText.textContent =
+                "The system is examining the message and transaction context.";
+
+
+            reasonList.innerHTML =
+                "";
+
+
+            data.reasons.forEach(
+                reason => {
+
+                    const div =
+                        document.createElement(
+                            "div"
+                        );
+
+                    div.className =
+                        "reason";
+
+
+                    const icon =
+                        document.createElement(
+                            "b"
+                        );
+
+                    icon.textContent =
+                        "!";
+
+
+                    const text =
+                        document.createElement(
+                            "span"
+                        );
+
+                    text.textContent =
+                        reason;
+
+
+                    div.appendChild(
+                        icon
+                    );
+
+                    div.appendChild(
+                        text
+                    );
+
+                    reasonList.appendChild(
+                        div
+                    );
+
+                }
+            );
+
+
+            classification.textContent =
+                data.classification;
+
+
+            confidence.textContent =
+                data.confidence + "%";
+
+
+            interventionText.textContent =
+                data.intervention;
+
+
+            riskStatus.textContent =
+                data.status;
+
+        }
+
+
+        /* =====================================================
+           SCENARIO SELECTION
+        ===================================================== */
+
+        scenarioButtons.forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        scenarioButtons.forEach(
+                            item => {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        loadScenario(
+                            button.dataset.scenario
+                        );
+
+
+                        setAnalysisState(
+                            "scenario"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           BACKEND ANALYSIS
+        ===================================================== */
+
+        async function analyzeThreat(){
+
+            const activeScenario =
+                document.querySelector(
+                    ".scenario.active"
+                );
+
+
+            const scenario =
+                activeScenario
+                    ? activeScenario.dataset.scenario
+                    : "electricity";
+
+
+            const context =
+                userContext.value.trim();
+
+
+            const amountValue =
+                paymentAmount.value.trim();
+
+
+            const recipientValue =
+                recipient.value.trim();
+
+
+            const amount =
+                amountValue === ""
+                    ? 0
+                    : Number(amountValue);
+
+
+            const payload = {
+
+                message:
+                    message.innerText.trim(),
+
+                context:
+                    context,
+
+                amount:
+                    Number.isFinite(amount)
+                        ? amount
+                        : 0,
+
+                recipient:
+                    recipientValue,
+
+                scenario:
+                    scenario,
+
+                source:
+                    "threat-demo.html"
+
+            };
+
+
+            /* ---------------------------------------------
+               START LOADING
+            --------------------------------------------- */
+
+            setLoading(true);
+
+
+            setAnalysisState(
+                "scenario"
+            );
+
+
+            riskStatus.textContent =
+                "Analyzing context...";
+
+
+            explanationText.textContent =
+                "UPI-Shield is analyzing the message, user-provided context and payment details.";
+
+
+            try{
+
+                const response =
+                    await fetch(
+                        ANALYZE_ENDPOINT,
+                        {
+
+                            method:"POST",
+
+                            headers:{
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    payload
+                                )
+
+                        }
+                    );
+
+
+                let result;
+
+
+                try{
+
+                    result =
+                        await response.json();
+
+                }
+
+                catch{
+
+                    throw new Error(
+                        "The backend returned an invalid JSON response."
+                    );
+
+                }
+
+
+                if(!response.ok){
+
+                    throw new Error(
+                        result.error ||
+                        `Backend returned HTTP ${response.status}.`
+                    );
+
+                }
+
+
+                if(
+                    !result ||
+                    result.success !== true ||
+                    !result.data
+                ){
+
+                    throw new Error(
+                        result?.error ||
+                        "The backend could not analyze this request."
+                    );
+
+                }
+
+
+                const data =
+                    result.data;
+
+
+                const risk =
+                    Number(
+                        data.risk_score
+                    ) || 0;
+
+
+                const level =
+                    data.risk_level ||
+                    "UNKNOWN";
+
+
+                const backendConfidence =
+                    Number(
+                        data.confidence
+                    ) || 0;
+
+
+                const signals =
+                    data.signals || {};
+
+
+                const reasons =
+                    Array.isArray(
+                        data.reasons
+                    )
+                        ? data.reasons
+                        : [];
+
+
+                const recommendation =
+                    data.recommended_action ||
+                    "Verify the payment request independently.";
+
+
+                /* -----------------------------------------
+                   UPDATE SIGNALS
+                ----------------------------------------- */
+
+                updateSignal(
+                    "urgency",
+                    signals.urgency || 0
+                );
+
+
+                updateSignal(
+                    "threat",
+                    signals.threat || 0
+                );
+
+
+                updateSignal(
+                    "impersonation",
+                    signals.impersonation || 0
+                );
+
+
+                updateSignal(
+                    "context",
+                    signals.context || 0
+                );
+
+
+                /* -----------------------------------------
+                   UPDATE RESULT
+                ----------------------------------------- */
+
+                updateRiskUI(
+                    risk,
+                    level,
+                    backendConfidence,
+                    signals,
+                    reasons,
+                    recommendation
+                );
+
+
+                /* -----------------------------------------
+                   FINAL STATUS
+                ----------------------------------------- */
+
+                if(risk >= 90){
+
+                    riskStatus.textContent =
+                        "Strong intervention required";
+
+                }
+
+                else if(risk >= 70){
+
+                    riskStatus.textContent =
+                        "Intervention recommended";
+
+                }
+
+                else if(risk >= 45){
+
+                    riskStatus.textContent =
+                        "Review before payment";
+
+                }
+
+                else{
+
+                    riskStatus.textContent =
+                        "Low contextual risk";
+
+                }
+
+
+                setAnalysisState(
+                    "backend"
+                );
+
+
+                /*
+                 * IMPORTANT:
+                 *
+                 * Nothing below this point resets
+                 * riskNumber, riskFill, classification,
+                 * confidence, reasons or intervention.
+                 *
+                 * The result therefore stays visible.
+                 */
+
+            }
+
+
+            catch(error){
+
+                console.error(
+                    "UPI-Shield analysis error:",
+                    error
+                );
+
+
+                setAnalysisState(
+                    "error"
+                );
+
+
+                explanationText.textContent =
+                    "The Python backend could not be reached. The current scenario result remains visible as the local fallback analysis.";
+
+
+                interventionText.textContent =
+                    "Start app.py on port 5000 and run the analysis again.";
+
+
+                /*
+                 * We intentionally DO NOT clear
+                 * the existing result here.
+                 */
+
+
+                alert(
+                    "UPI-Shield backend could not be reached.\n\n" +
+                    "Make sure app.py is running on port 5000."
+                );
+
+            }
+
+
+            finally{
+
+                /*
+                 * Only stop loading.
+                 *
+                 * DO NOT reset the analysis.
+                 */
+
+                setLoading(false);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           ANALYZE BUTTON
+        ===================================================== */
+
+        analyzeButton.addEventListener(
+            "click",
+            analyzeThreat
+        );
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        document
+            .getElementById("reset")
+            .addEventListener(
+                "click",
+                () => {
+
+                    scenarioButtons.forEach(
+                        item => {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    scenarioButtons[0]
+                        .classList.add(
+                            "active"
+                        );
+
+
+                    userContext.value =
+                        "";
+
+
+                    contextCounter.textContent =
+                        "0 / 3000";
+
+
+                    paymentAmount.value =
+                        "";
+
+
+                    recipient.value =
+                        "";
+
+
+                    loadScenario(
+                        "electricity"
+                    );
+
+
+                    setAnalysisState(
+                        "scenario"
+                    );
+
+                }
+            );
+
+
+        /* =====================================================
+           INITIAL LOAD
+        ===================================================== */
+
+        loadScenario(
+            "electricity"
+        );
+
+
+        setAnalysisState(
+            "scenario"
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>How It Works | UPI-Shield</title>
+
+    <meta
+        name="description"
+        content="Understand how UPI-Shield detects contextual digital payment scams and coercion before users authorize fraudulent UPI transactions."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        /* =========================================================
+           UPI-SHIELD — HOW IT WORKS
+           Premium Neumorphic UI
+        ========================================================= */
+
+        :root {
+            --bg: #e9f0f7;
+
+            --primary: #1769e0;
+            --primary-dark: #0d4fae;
+            --primary-light: #4d91f5;
+
+            --cyan: #08a9d6;
+            --success: #15966b;
+            --warning: #df8b31;
+            --danger: #d94b55;
+
+            --text: #12263a;
+            --muted: #62798d;
+            --soft-text: #8093a4;
+
+            --white: #ffffff;
+
+            --dark-shadow: rgba(163, 177, 198, 0.62);
+            --light-shadow: rgba(255, 255, 255, 0.96);
+
+            --raised:
+                10px 10px 22px var(--dark-shadow),
+                -10px -10px 22px var(--light-shadow);
+
+            --raised-small:
+                6px 6px 14px rgba(163, 177, 198, 0.55),
+                -6px -6px 14px rgba(255, 255, 255, 0.92);
+
+            --inset:
+                inset 6px 6px 13px rgba(163, 177, 198, 0.48),
+                inset -6px -6px 13px rgba(255, 255, 255, 0.92);
+
+            --radius: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================================================
+           BACKGROUND
+        ========================================================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: rgba(77, 145, 245, 0.08);
+            top: -180px;
+            right: -100px;
+            filter: blur(5px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 330px;
+            height: 330px;
+            border-radius: 50%;
+            background: rgba(8, 169, 214, 0.06);
+            bottom: -150px;
+            left: -100px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1180px, calc(100% - 36px));
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 22px;
+
+            background: rgba(233, 240, 247, 0.90);
+            backdrop-filter: blur(18px);
+
+            border-radius: 22px;
+            box-shadow: var(--raised-small);
+
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 13px;
+
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 800;
+
+            box-shadow: var(--raised-small);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .brand-name {
+            font-size: 15px;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-tag {
+            color: var(--muted);
+            font-size: 9px;
+            margin-top: 4px;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            padding: 11px 13px;
+            border-radius: 12px;
+
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: var(--raised-small);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.40);
+            box-shadow: var(--inset);
+        }
+
+        .nav-cta {
+            color: white !important;
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--primary-light)
+            ) !important;
+
+            box-shadow:
+                5px 5px 12px rgba(13, 79, 174, 0.25),
+                -4px -4px 10px rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .menu-btn {
+            display: none;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--bg);
+            box-shadow: var(--raised-small);
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            min-height: 92vh;
+            padding: 160px 7% 90px;
+
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 14px;
+            border-radius: 50px;
+
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+
+            box-shadow: var(--inset);
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 0 5px rgba(21, 150, 107, 0.08);
+        }
+
+        .hero h1 {
+            margin-top: 26px;
+
+            font-size: clamp(42px, 5.2vw, 72px);
+            line-height: 1.02;
+            letter-spacing: -3.5px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero-description {
+            max-width: 620px;
+            margin-top: 25px;
+
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            min-height: 48px;
+            padding: 0 20px;
+
+            border: none;
+            border-radius: 14px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--primary-light)
+            );
+
+            box-shadow:
+                7px 7px 15px rgba(13, 79, 174, 0.25),
+                -6px -6px 14px rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-secondary {
+            color: var(--primary);
+            background: var(--bg);
+            box-shadow: var(--raised-small);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* =========================================================
+           HERO SYSTEM VISUAL
+        ========================================================= */
+
+        .system-card {
+            position: relative;
+            min-height: 500px;
+
+            padding: 28px;
+            border-radius: 34px;
+
+            box-shadow: var(--raised);
+        }
+
+        .system-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .system-title {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .live-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: var(--success);
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(21, 150, 107, 0.25);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(21, 150, 107, 0);
+            }
+        }
+
+        .pipeline {
+            position: relative;
+            margin-top: 32px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .pipeline-line {
+            position: absolute;
+            left: 29px;
+            top: 31px;
+            bottom: 31px;
+
+            width: 2px;
+            background: linear-gradient(
+                var(--primary),
+                var(--cyan),
+                var(--success)
+            );
+
+            opacity: 0.28;
+        }
+
+        .pipeline-step {
+            position: relative;
+
+            display: grid;
+            grid-template-columns: 58px 1fr;
+            gap: 15px;
+            align-items: center;
+
+            padding: 13px;
+
+            border-radius: 17px;
+
+            background: rgba(255,255,255,0.18);
+            box-shadow: var(--raised-small);
+
+            transition: 0.3s ease;
+        }
+
+        .pipeline-step:hover {
+            transform: translateX(5px);
+        }
+
+        .step-icon {
+            position: relative;
+            z-index: 2;
+
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            color: var(--primary);
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .pipeline-step:nth-child(3) .step-icon {
+            color: var(--cyan);
+        }
+
+        .pipeline-step:nth-child(4) .step-icon {
+            color: var(--warning);
+        }
+
+        .pipeline-step:nth-child(5) .step-icon {
+            color: var(--success);
+        }
+
+        .step-info h3 {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .step-info p {
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.55;
+        }
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        section {
+            padding: 105px 7%;
+        }
+
+        .section-heading {
+            max-width: 720px;
+            margin-bottom: 55px;
+        }
+
+        .section-kicker {
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            margin-top: 13px;
+
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+
+        .section-heading p {
+            margin-top: 17px;
+
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           STEPS
+        ========================================================= */
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        .step-card {
+            position: relative;
+
+            min-height: 260px;
+            padding: 25px 20px;
+
+            border-radius: 22px;
+
+            box-shadow: var(--raised-small);
+
+            transition: 0.35s ease;
+            overflow: hidden;
+        }
+
+        .step-card:hover {
+            transform: translateY(-9px);
+        }
+
+        .step-number {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .step-card-icon {
+            width: 48px;
+            height: 48px;
+
+            margin: 22px 0;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 15px;
+
+            color: var(--primary);
+            box-shadow: var(--inset);
+
+            font-weight: 800;
+        }
+
+        .step-card h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .step-card p {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .step-progress {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 18px;
+
+            height: 4px;
+            border-radius: 20px;
+
+            background: rgba(23, 105, 224, 0.08);
+            overflow: hidden;
+        }
+
+        .step-progress span {
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            transform: translateX(-100%);
+
+            background: linear-gradient(
+                90deg,
+                var(--primary),
+                var(--cyan)
+            );
+        }
+
+        .reveal.active .step-progress span {
+            animation: progressIn 1.2s ease forwards;
+        }
+
+        @keyframes progressIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* =========================================================
+           CONTEXT ANALYSIS
+        ========================================================= */
+
+        .analysis-section {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .context-card {
+            padding: 30px;
+            border-radius: 28px;
+            box-shadow: var(--raised);
+        }
+
+        .context-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .context-header strong {
+            font-size: 14px;
+        }
+
+        .context-badge {
+            padding: 7px 10px;
+            border-radius: 50px;
+            color: var(--danger);
+            background: rgba(217, 75, 85, 0.08);
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .signal {
+            margin: 17px 0;
+        }
+
+        .signal-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .signal-top span:last-child {
+            color: var(--primary);
+        }
+
+        .signal-bar {
+            height: 8px;
+            border-radius: 50px;
+            background: rgba(23, 105, 224, 0.08);
+            box-shadow: var(--inset);
+            overflow: hidden;
+        }
+
+        .signal-fill {
+            height: 100%;
+            width: 0;
+            border-radius: inherit;
+            background: linear-gradient(
+                90deg,
+                var(--primary-light),
+                var(--primary)
+            );
+            transition: width 1.2s ease;
+        }
+
+        .analysis-copy h2 {
+            font-size: clamp(30px, 4vw, 46px);
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+
+        .analysis-copy h2 span {
+            color: var(--primary);
+        }
+
+        .analysis-copy p {
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.85;
+        }
+
+        .bullet-list {
+            display: grid;
+            gap: 13px;
+            margin-top: 25px;
+        }
+
+        .bullet {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .bullet-mark {
+            flex: 0 0 24px;
+            width: 24px;
+            height: 24px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 8px;
+
+            color: var(--success);
+            box-shadow: var(--raised-small);
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .bullet p {
+            margin: 0;
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           ARCHITECTURE
+        ========================================================= */
+
+        .architecture {
+            padding-top: 30px;
+        }
+
+        .architecture-card {
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: var(--raised);
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        .layer {
+            padding: 24px 18px;
+            border-radius: 20px;
+            box-shadow: var(--inset);
+        }
+
+        .layer-label {
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .layer h3 {
+            margin-top: 13px;
+            font-size: 13px;
+        }
+
+        .layer p {
+            margin-top: 9px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           CTA
+        ========================================================= */
+
+        .cta {
+            padding-top: 60px;
+            padding-bottom: 120px;
+        }
+
+        .cta-card {
+            position: relative;
+            overflow: hidden;
+
+            padding: 65px;
+
+            border-radius: 32px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(23,105,224,0.96),
+                rgba(77,145,245,0.94)
+            );
+
+            color: white;
+
+            box-shadow:
+                15px 15px 35px rgba(13, 79, 174, 0.25),
+                -10px -10px 25px rgba(255,255,255,0.75);
+        }
+
+        .cta-card::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 45px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: -90px;
+            top: -110px;
+        }
+
+        .cta-card h2 {
+            position: relative;
+            max-width: 650px;
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: 1.08;
+            letter-spacing: -2px;
+        }
+
+        .cta-card p {
+            position: relative;
+            max-width: 620px;
+            margin-top: 17px;
+
+            color: rgba(255,255,255,0.78);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .cta-card .btn {
+            position: relative;
+            margin-top: 28px;
+            background: white;
+            color: var(--primary);
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            padding: 35px 7% 45px;
+            border-top: 1px solid rgba(98, 121, 141, 0.08);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-brand {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .footer-copy {
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 6px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 17px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 10px;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* =========================================================
+           REVEAL
+        ========================================================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .system-card {
+                max-width: 720px;
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .analysis-section {
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+
+            .architecture-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                height: 65px;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 76px;
+                left: 0;
+                right: 0;
+
+                padding: 15px;
+
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+
+                border-radius: 20px;
+
+                background: rgba(233, 240, 247, 0.97);
+                box-shadow: var(--raised);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                text-align: center;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 130px 6% 70px;
+            }
+
+            section {
+                padding: 75px 6%;
+            }
+
+            .system-card {
+                min-height: auto;
+            }
+
+            .cta-card {
+                padding: 40px 28px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 560px) {
+
+            .navbar {
+                width: calc(100% - 22px);
+                top: 11px;
+                padding: 0 14px;
+            }
+
+            .brand-tag {
+                display: none;
+            }
+
+            .hero {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .steps-grid,
+            .architecture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .system-card {
+                padding: 20px;
+            }
+
+            .architecture-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================== -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="brand">
+
+            <div class="brand-logo">
+                U
+            </div>
+
+            <div class="brand-text">
+                <span class="brand-name">UPI-Shield</span>
+                <span class="brand-tag">Contextual Payment Security</span>
+            </div>
+
+        </a>
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="index.html">Home</a>
+            <a href="problem.html">Problem</a>
+            <a href="threat-demo.html">Threat Demo</a>
+            <a href="how-it-works.html" class="active">How It Works</a>
+            <a href="security.html">Security</a>
+            <a href="protect.html" class="nav-cta">Protect Payment</a>
+
+        </div>
+
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
+
+    </nav>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content reveal">
+
+                <div class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    CONTEXT-AWARE DETECTION
+                </div>
+
+                <h1>
+                    Security that understands
+                    <span>the situation.</span>
+                </h1>
+
+                <p class="hero-description">
+                    UPI-Shield does more than ask whether the user is
+                    authenticated. It analyzes the surrounding context,
+                    identifies psychological pressure and suspicious
+                    payment intent, then helps the user pause before
+                    authorizing a risky transaction.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="threat-demo.html" class="btn btn-primary">
+                        Try Threat Demo →
+                    </a>
+
+                    <a href="#workflow" class="btn btn-secondary">
+                        Explore Workflow
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYSTEM VISUAL -->
+
+            <div class="system-card reveal">
+
+                <div class="system-header">
+
+                    <span class="system-title">
+                        UPI-Shield Detection Pipeline
+                    </span>
+
+                    <span class="live-status">
+                        <span class="live-dot"></span>
+                        ACTIVE
+                    </span>
+
+                </div>
+
+                <div class="pipeline">
+
+                    <div class="pipeline-line"></div>
+
+                    <div class="pipeline-step">
+
+                        <div class="step-icon">
+                            01
+                        </div>
+
+                        <div class="step-info">
+                            <h3>Context Input</h3>
+                            <p>
+                                Collect relevant payment and communication
+                                context around the transaction.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="pipeline-step">
+
+                        <div class="step-icon">
+                            02
+                        </div>
+
+                        <div class="step-info">
+                            <h3>NLP Analysis</h3>
+                            <p>
+                                Analyze language for urgency, threats,
+                                impersonation and deceptive patterns.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="pipeline-step">
+
+                        <div class="step-icon">
+                            03
+                        </div>
+
+                        <div class="step-info">
+                            <h3>Context Correlation</h3>
+                            <p>
+                                Compare the detected signals with the
+                                payment situation and user intent.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="pipeline-step">
+
+                        <div class="step-icon">
+                            04
+                        </div>
+
+                        <div class="step-info">
+                            <h3>Risk Scoring</h3>
+                            <p>
+                                Combine contextual signals into an explainable
+                                risk assessment.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="pipeline-step">
+
+                        <div class="step-icon">
+                            05
+                        </div>
+
+                        <div class="step-info">
+                            <h3>User Intervention</h3>
+                            <p>
+                                Present a clear warning before the user
+                                proceeds with the risky payment.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             WORKFLOW
+        ====================================================== -->
+
+        <section id="workflow">
+
+            <div class="section-heading reveal">
+
+                <div class="section-kicker">
+                    THE WORKFLOW
+                </div>
+
+                <h2>
+                    Five layers between
+                    deception and authorization.
+                </h2>
+
+                <p>
+                    The system is designed as a contextual security layer,
+                    connecting communication signals with payment intent
+                    rather than relying exclusively on authentication.
+                </p>
+
+            </div>
+
+
+            <div class="steps-grid">
+
+                <article class="step-card reveal">
+
+                    <span class="step-number">01 / INPUT</span>
+
+                    <div class="step-card-icon">
+                        IN
+                    </div>
+
+                    <h3>Capture Context</h3>
+
+                    <p>
+                        Relevant text, transaction information and available
+                        contextual signals enter the analysis pipeline.
+                    </p>
+
+                    <div class="step-progress">
+                        <span></span>
+                    </div>
+
+                </article>
+
+
+                <article class="step-card reveal">
+
+                    <span class="step-number">02 / NLP</span>
+
+                    <div class="step-card-icon">
+                        AI
+                    </div>
+
+                    <h3>Understand Language</h3>
+
+                    <p>
+                        NLP identifies linguistic indicators associated with
+                        urgency, intimidation, impersonation and deception.
+                    </p>
+
+                    <div class="step-progress">
+                        <span></span>
+                    </div>
+
+                </article>
+
+
+                <article class="step-card reveal">
+
+                    <span class="step-number">03 / CONTEXT</span>
+
+                    <div class="step-card-icon">
+                        CX
+                    </div>
+
+                    <h3>Correlate Signals</h3>
+
+                    <p>
+                        Individual signals are combined with transaction
+                        context to determine whether the payment scenario
+                        appears suspicious.
+                    </p>
+
+                    <div class="step-progress">
+                        <span></span>
+                    </div>
+
+                </article>
+
+
+                <article class="step-card reveal">
+
+                    <span class="step-number">04 / RISK</span>
+
+                    <div class="step-card-icon">
+                        R
+                    </div>
+
+                    <h3>Calculate Risk</h3>
+
+                    <p>
+                        The system generates an explainable risk score rather
+                        than presenting a mysterious black-box decision.
+                    </p>
+
+                    <div class="step-progress">
+                        <span></span>
+                    </div>
+
+                </article>
+
+
+                <article class="step-card reveal">
+
+                    <span class="step-number">05 / ACTION</span>
+
+                    <div class="step-card-icon">
+                        !
+                    </div>
+
+                    <h3>Intervene</h3>
+
+                    <p>
+                        A contextual warning helps the user reconsider the
+                        payment before authorization.
+                    </p>
+
+                    <div class="step-progress">
+                        <span></span>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTEXT ANALYSIS
+        ====================================================== -->
+
+        <section>
+
+            <div class="analysis-section">
+
+                <div class="context-card reveal">
+
+                    <div class="context-header">
+
+                        <strong>Contextual Signal Analysis</strong>
+
+                        <span class="context-badge">
+                            HIGH RISK
+                        </span>
+
+                    </div>
+
+
+                    <div class="signal">
+
+                        <div class="signal-top">
+                            <span>Urgency Language</span>
+                            <span>94%</span>
+                        </div>
+
+                        <div class="signal-bar">
+                            <div class="signal-fill" data-width="94%"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="signal">
+
+                        <div class="signal-top">
+                            <span>Threat Indicators</span>
+                            <span>89%</span>
+                        </div>
+
+                        <div class="signal-bar">
+                            <div class="signal-fill" data-width="89%"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="signal">
+
+                        <div class="signal-top">
+                            <span>Impersonation</span>
+                            <span>92%</span>
+                        </div>
+
+                        <div class="signal-bar">
+                            <div class="signal-fill" data-width="92%"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="signal">
+
+                        <div class="signal-top">
+                            <span>Payment Context Mismatch</span>
+                            <span>86%</span>
+                        </div>
+
+                        <div class="signal-bar">
+                            <div class="signal-fill" data-width="86%"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-copy reveal">
+
+                    <div class="section-kicker">
+                        WHY CONTEXT MATTERS
+                    </div>
+
+                    <h2>
+                        One signal can be weak.
+                        <span>Several signals together can be dangerous.</span>
+                    </h2>
+
+                    <p>
+                        UPI-Shield is designed around the idea that fraudulent
+                        payment behavior is often revealed by the combination
+                        of multiple contextual signals.
+                    </p>
+
+                    <div class="bullet-list">
+
+                        <div class="bullet">
+
+                            <div class="bullet-mark">✓</div>
+
+                            <p>
+                                Detects urgency and pressure instead of treating
+                                the message as ordinary communication.
+                            </p>
+
+                        </div>
+
+
+                        <div class="bullet">
+
+                            <div class="bullet-mark">✓</div>
+
+                            <p>
+                                Connects suspicious language with the payment
+                                request occurring at the same time.
+                            </p>
+
+                        </div>
+
+
+                        <div class="bullet">
+
+                            <div class="bullet-mark">✓</div>
+
+                            <p>
+                                Produces an understandable reason for the
+                                intervention instead of a silent rejection.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ARCHITECTURE
+        ====================================================== -->
+
+        <section class="architecture">
+
+            <div class="section-heading reveal">
+
+                <div class="section-kicker">
+                    SYSTEM ARCHITECTURE
+                </div>
+
+                <h2>
+                    A security layer designed around
+                    user context.
+                </h2>
+
+                <p>
+                    The conceptual architecture separates signal detection,
+                    reasoning and intervention so each stage remains
+                    explainable.
+                </p>
+
+            </div>
+
+
+            <div class="architecture-card reveal">
+
+                <div class="architecture-grid">
+
+                    <div class="layer">
+
+                        <span class="layer-label">
+                            Layer 01
+                        </span>
+
+                        <h3>Signal Collection</h3>
+
+                        <p>
+                            Payment request and relevant contextual inputs
+                            enter the system.
+                        </p>
+
+                    </div>
+
+
+                    <div class="layer">
+
+                        <span class="layer-label">
+                            Layer 02
+                        </span>
+
+                        <h3>Language Intelligence</h3>
+
+                        <p>
+                            NLP identifies suspicious linguistic and
+                            psychological patterns.
+                        </p>
+
+                    </div>
+
+
+                    <div class="layer">
+
+                        <span class="layer-label">
+                            Layer 03
+                        </span>
+
+                        <h3>Risk Engine</h3>
+
+                        <p>
+                            Signals are correlated and converted into a
+                            contextual risk assessment.
+                        </p>
+
+                    </div>
+
+
+                    <div class="layer">
+
+                        <span class="layer-label">
+                            Layer 04
+                        </span>
+
+                        <h3>Human Intervention</h3>
+
+                        <p>
+                            The user receives a clear explanation and an
+                            opportunity to reconsider.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CTA
+        ====================================================== -->
+
+        <section class="cta">
+
+            <div class="cta-card reveal">
+
+                <h2>
+                    See the entire detection process in action.
+                </h2>
+
+                <p>
+                    Explore a simulated scam scenario and watch how
+                    UPI-Shield turns contextual signals into an actionable
+                    security warning.
+                </p>
+
+                <a href="threat-demo.html" class="btn">
+                    Launch Threat Demo →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <div>
+
+                <div class="footer-brand">
+                    UPI-Shield
+                </div>
+
+                <div class="footer-copy">
+                    Contextual digital payment security prototype.
+                </div>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="problem.html">Problem</a>
+                <a href="threat-demo.html">Threat Demo</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="security.html">Security</a>
+                <a href="protect.html">Protect</a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        /* =========================================================
+           MOBILE NAVIGATION
+        ========================================================== */
+
+        const menuBtn = document.getElementById("menuBtn");
+        const navLinks = document.getElementById("navLinks");
+
+        menuBtn.addEventListener("click", () => {
+            navLinks.classList.toggle("show");
+        });
+
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("show");
+            });
+
+        });
+
+
+        /* =========================================================
+           SCROLL REVEAL
+        ========================================================== */
+
+        const observer = new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("active");
+
+                        const fills =
+                            entry.target.querySelectorAll(".signal-fill");
+
+                        fills.forEach(fill => {
+                            setTimeout(() => {
+                                fill.style.width =
+                                    fill.dataset.width;
+                            }, 200);
+                        });
+
+                        observer.unobserve(entry.target);
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+
+        document.querySelectorAll(".reveal").forEach(element => {
+            observer.observe(element);
+        });
+
+
+        /* =========================================================
+           STAGGER CARD ANIMATION
+        ========================================================== */
+
+        document
+            .querySelectorAll(".steps-grid .step-card")
+            .forEach((card, index) => {
+
+                card.style.transitionDelay =
+                    `${index * 90}ms`;
+
+            });
+
+
+        document
+            .querySelectorAll(".architecture-grid .layer")
+            .forEach((layer, index) => {
+
+                layer.style.transition =
+                    "transform .3s ease, box-shadow .3s ease";
+
+                layer.addEventListener("mouseenter", () => {
+                    layer.style.transform = "translateY(-5px)";
+                });
+
+                layer.addEventListener("mouseleave", () => {
+                    layer.style.transform = "translateY(0)";
+                });
+
+            });
+
+    </script>
+
+</body>
+</html>

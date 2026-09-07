@@ -1,0 +1,3834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="UPI-Shield — Contextual Digital Payment Scam & Coercion Detector">
+
+    <meta name="theme-color"
+          content="#e9f0f7">
+
+    <title>UPI-Shield | Contextual Payment Security</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =========================================================
+           ROOT
+        ========================================================= */
+
+        :root {
+
+            --bg: #e9f0f7;
+
+            --primary: #1769e0;
+            --primary-dark: #0d4fae;
+            --primary-light: #4d91f5;
+
+            --cyan: #08a9d6;
+
+            --danger: #d94b55;
+            --warning: #df8b31;
+            --success: #15966b;
+
+            --text: #12263a;
+            --muted: #62798d;
+            --soft-text: #8093a4;
+
+            --white: #ffffff;
+
+            --dark-shadow: rgba(163, 177, 198, 0.68);
+            --light-shadow: rgba(255, 255, 255, 0.96);
+
+            --raised:
+                12px 12px 25px var(--dark-shadow),
+                -12px -12px 25px var(--light-shadow);
+
+            --raised-small:
+                7px 7px 16px rgba(163,177,198,.55),
+                -7px -7px 16px rgba(255,255,255,.95);
+
+            --inset:
+                inset 7px 7px 15px rgba(163,177,198,.55),
+                inset -7px -7px 15px rgba(255,255,255,.95);
+
+            --radius-lg: 28px;
+            --radius-md: 20px;
+            --radius-sm: 14px;
+
+            --transition:
+                all .35s cubic-bezier(.2,.8,.2,1);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+
+            font-family: "Inter", sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            overflow-x: hidden;
+
+            line-height: 1.6;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+
+            background: linear-gradient(
+                180deg,
+                var(--primary-light),
+                var(--primary-dark)
+            );
+
+            border-radius: 20px;
+        }
+
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+
+            position: fixed;
+
+            top: 18px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: min(1180px, calc(100% - 32px));
+
+            z-index: 1000;
+
+            padding: 12px 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: rgba(233,240,247,.84);
+
+            backdrop-filter: blur(18px);
+
+            border-radius: 22px;
+
+            box-shadow: var(--raised-small);
+
+            border: 1px solid rgba(255,255,255,.55);
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: max-content;
+        }
+
+
+        .brand-logo {
+
+            width: 44px;
+            height: 44px;
+
+            border-radius: 14px;
+
+            display: grid;
+
+            place-items: center;
+
+            color: white;
+
+            font-weight: 800;
+
+            font-size: 19px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--primary-light),
+                    var(--primary-dark)
+                );
+
+            box-shadow:
+                5px 5px 12px rgba(13,79,174,.35),
+                -4px -4px 10px rgba(255,255,255,.9);
+        }
+
+
+        .brand-text strong {
+
+            display: block;
+
+            font-size: 16px;
+
+            letter-spacing: -.3px;
+        }
+
+
+        .brand-text span {
+
+            display: block;
+
+            font-size: 10px;
+
+            color: var(--muted);
+
+            letter-spacing: .9px;
+
+            text-transform: uppercase;
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+        }
+
+
+        .nav-links a {
+
+            padding: 10px 13px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: var(--muted);
+
+            transition: var(--transition);
+        }
+
+
+        .nav-links a:hover,
+        .nav-links a.active {
+
+            color: var(--primary);
+
+            background: var(--bg);
+
+            box-shadow: var(--inset);
+        }
+
+
+        .nav-cta {
+
+            padding: 11px 17px !important;
+
+            color: white !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--primary-dark)
+                ) !important;
+
+            box-shadow:
+                5px 5px 12px rgba(13,79,174,.28),
+                -4px -4px 10px rgba(255,255,255,.85) !important;
+        }
+
+
+        .menu-button {
+
+            display: none;
+
+            width: 43px;
+            height: 43px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+
+            color: var(--primary);
+
+            font-size: 20px;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+
+            min-height: 100vh;
+
+            padding:
+                155px 7vw
+                80px;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.05fr)
+                minmax(400px, .95fr);
+
+            gap: 70px;
+
+            align-items: center;
+
+            position: relative;
+        }
+
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(77,145,245,.17),
+                    transparent 70%
+                );
+
+            top: 80px;
+            left: -160px;
+
+            pointer-events: none;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .eyebrow {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            border-radius: 30px;
+
+            color: var(--primary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            box-shadow: var(--inset);
+
+            margin-bottom: 24px;
+        }
+
+
+        .eyebrow-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+
+            box-shadow:
+                0 0 0 5px rgba(21,150,107,.09);
+
+            animation: pulse 2s infinite;
+        }
+
+
+        .hero h1 {
+
+            max-width: 760px;
+
+            font-size:
+                clamp(42px, 5.3vw, 76px);
+
+            line-height: 1.02;
+
+            letter-spacing: -4px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero h1 span {
+
+            color: var(--primary);
+
+            display: block;
+        }
+
+
+        .hero-description {
+
+            max-width: 650px;
+
+            color: var(--muted);
+
+            font-size: 17px;
+
+            line-height: 1.8;
+
+            margin-bottom: 34px;
+        }
+
+
+        .hero-actions {
+
+            display: flex;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .primary-button,
+        .secondary-button {
+
+            border: none;
+
+            padding: 15px 22px;
+
+            border-radius: 16px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            transition: var(--transition);
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+        }
+
+
+        .primary-button {
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--primary-dark)
+                );
+
+            box-shadow:
+                8px 8px 18px rgba(13,79,174,.27),
+                -7px -7px 16px rgba(255,255,255,.9);
+        }
+
+
+        .primary-button:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                12px 12px 24px rgba(13,79,174,.28),
+                -8px -8px 18px rgba(255,255,255,.95);
+        }
+
+
+        .secondary-button {
+
+            color: var(--primary);
+
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+        }
+
+
+        .secondary-button:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow: var(--inset);
+
+        }
+
+
+        /* =========================================================
+           HERO VISUAL
+        ========================================================= */
+
+        .hero-visual {
+
+            position: relative;
+
+            min-height: 490px;
+
+            display: grid;
+
+            place-items: center;
+        }
+
+
+        .security-orbit {
+
+            width: min(440px, 85vw);
+
+            aspect-ratio: 1;
+
+            border-radius: 50%;
+
+            display: grid;
+
+            place-items: center;
+
+            box-shadow: var(--raised);
+
+            position: relative;
+
+            animation: floating 5s ease-in-out infinite;
+        }
+
+
+        .security-orbit::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 40px;
+
+            border-radius: 50%;
+
+            border: 1px dashed rgba(23,105,224,.22);
+        }
+
+
+        .security-orbit::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 83px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(8,169,214,.18);
+        }
+
+
+        .shield-core {
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 48px;
+
+            display: grid;
+
+            place-items: center;
+
+            color: white;
+
+            font-size: 70px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--primary-light),
+                    var(--primary-dark)
+                );
+
+            box-shadow:
+                15px 15px 30px rgba(13,79,174,.3),
+                -12px -12px 25px rgba(255,255,255,.95);
+
+            transform: rotate(-3deg);
+        }
+
+
+        .orbit-chip {
+
+            position: absolute;
+
+            padding: 11px 14px;
+
+            border-radius: 14px;
+
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            color: var(--text);
+
+            animation: chipFloat 4s ease-in-out infinite;
+        }
+
+
+        .chip-one {
+            top: 57px;
+            left: 24px;
+        }
+
+
+        .chip-two {
+            right: 6px;
+            top: 145px;
+
+            animation-delay: .8s;
+        }
+
+
+        .chip-three {
+            bottom: 85px;
+            left: 17px;
+
+            animation-delay: 1.3s;
+        }
+
+
+        .chip-four {
+            bottom: 45px;
+            right: 43px;
+
+            animation-delay: 1.9s;
+        }
+
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        .section {
+
+            padding:
+                105px 7vw;
+        }
+
+
+        .section-header {
+
+            max-width: 750px;
+
+            margin-bottom: 50px;
+        }
+
+
+        .section-label {
+
+            display: inline-block;
+
+            color: var(--primary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 12px;
+        }
+
+
+        .section-title {
+
+            font-size:
+                clamp(32px, 4vw, 53px);
+
+            line-height: 1.08;
+
+            letter-spacing: -2.5px;
+
+            margin-bottom: 17px;
+        }
+
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+
+        .section-description {
+
+            color: var(--muted);
+
+            line-height: 1.8;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================================================
+           TEXT ANALYZER
+        ========================================================= */
+
+        .analyzer-section {
+
+            padding:
+                110px 7vw;
+
+            position: relative;
+        }
+
+
+        .analyzer-wrapper {
+
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                .82fr
+                1.18fr;
+
+            gap: 35px;
+
+            align-items: stretch;
+        }
+
+
+        .analyzer-intro {
+
+            padding: 40px;
+
+            border-radius: var(--radius-lg);
+
+            box-shadow: var(--raised);
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .analyzer-intro h2 {
+
+            font-size: 39px;
+
+            line-height: 1.1;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .analyzer-intro h2 span {
+            color: var(--primary);
+        }
+
+
+        .analyzer-intro p {
+
+            color: var(--muted);
+
+            line-height: 1.8;
+
+            font-size: 14px;
+
+            margin-bottom: 27px;
+        }
+
+
+        .context-list {
+
+            display: grid;
+
+            gap: 12px;
+        }
+
+
+        .context-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: var(--text);
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .context-icon {
+
+            width: 34px;
+            height: 34px;
+
+            flex-shrink: 0;
+
+            border-radius: 11px;
+
+            display: grid;
+
+            place-items: center;
+
+            color: var(--primary);
+
+            background: var(--bg);
+
+            box-shadow: var(--inset);
+        }
+
+
+        .analyzer-card {
+
+            padding: 30px;
+
+            border-radius: var(--radius-lg);
+
+            box-shadow: var(--raised);
+
+            position: relative;
+        }
+
+
+        .analyzer-card-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .analyzer-card-header h3 {
+
+            font-size: 18px;
+        }
+
+
+        .live-status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            color: var(--success);
+
+            text-transform: uppercase;
+
+            letter-spacing: .8px;
+        }
+
+
+        .live-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+
+            animation: pulse 1.8s infinite;
+        }
+
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+
+        .input-label-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 9px;
+        }
+
+
+        .input-label {
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: var(--text);
+
+            letter-spacing: .2px;
+        }
+
+
+        .optional {
+
+            color: var(--soft-text);
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        textarea,
+        .text-input {
+
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            color: var(--text);
+
+            background: var(--bg);
+
+            box-shadow: var(--inset);
+
+            border-radius: 16px;
+
+            transition: var(--transition);
+        }
+
+
+        textarea {
+
+            min-height: 175px;
+
+            resize: vertical;
+
+            padding: 17px;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        textarea::placeholder,
+        .text-input::placeholder {
+            color: #91a1af;
+        }
+
+
+        textarea:focus,
+        .text-input:focus {
+
+            box-shadow:
+                inset 7px 7px 15px rgba(163,177,198,.48),
+                inset -7px -7px 15px rgba(255,255,255,.95),
+                0 0 0 2px rgba(23,105,224,.12);
+        }
+
+
+        .character-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 7px;
+
+            color: var(--soft-text);
+
+            font-size: 10px;
+        }
+
+
+        .input-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+
+        .text-input {
+
+            padding: 14px;
+
+            font-size: 13px;
+        }
+
+
+        .analyze-button {
+
+            width: 100%;
+
+            margin-top: 7px;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--primary-dark)
+                );
+
+            box-shadow:
+                8px 8px 18px rgba(13,79,174,.25),
+                -7px -7px 16px rgba(255,255,255,.88);
+
+            transition: var(--transition);
+        }
+
+
+        .analyze-button:hover {
+            transform: translateY(-3px);
+        }
+
+
+        .analyze-button:disabled {
+
+            opacity: .6;
+
+            cursor: wait;
+
+            transform: none;
+        }
+
+
+        /* =========================================================
+           LOADER
+        ========================================================= */
+
+        .analysis-loader {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            padding: 22px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .spinner {
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            border: 3px solid rgba(23,105,224,.15);
+
+            border-top-color: var(--primary);
+
+            animation: spin .8s linear infinite;
+        }
+
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* =========================================================
+           ANALYSIS RESULT
+        ========================================================= */
+
+        .analysis-result {
+
+            margin-top: 25px;
+
+            padding: 24px;
+
+            border-radius: 20px;
+
+            background: var(--bg);
+
+            box-shadow: var(--inset);
+
+            animation: resultIn .45s ease;
+        }
+
+
+        .risk-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .risk-label {
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.3px;
+
+            color: var(--muted);
+
+            text-transform: uppercase;
+        }
+
+
+        #riskLevel {
+
+            font-size: 26px;
+
+            margin-top: 2px;
+        }
+
+
+        .score {
+
+            width: 70px;
+            height: 70px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            box-shadow: var(--raised-small);
+
+            color: var(--primary);
+        }
+
+
+        .score strong {
+
+            font-size: 22px;
+
+            line-height: 1;
+        }
+
+
+        .score span {
+
+            font-size: 9px;
+
+            color: var(--muted);
+        }
+
+
+        .risk-bar {
+
+            height: 9px;
+
+            background: var(--bg);
+
+            box-shadow: var(--inset);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            margin-bottom: 20px;
+        }
+
+
+        .risk-fill {
+
+            height: 100%;
+
+            width: 0;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--success),
+                    var(--warning),
+                    var(--danger)
+                );
+
+            transition:
+                width 1s cubic-bezier(.2,.8,.2,1);
+        }
+
+
+        .result-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .result-stat {
+
+            padding: 13px;
+
+            border-radius: 13px;
+
+            box-shadow: var(--raised-small);
+        }
+
+
+        .result-stat span {
+
+            display: block;
+
+            color: var(--soft-text);
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .result-stat strong {
+
+            font-size: 12px;
+        }
+
+
+        .result-block {
+
+            padding: 16px;
+
+            border-radius: 14px;
+
+            margin-top: 12px;
+
+            box-shadow: var(--raised-small);
+        }
+
+
+        .result-block h4 {
+
+            font-size: 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .reason-list {
+
+            list-style: none;
+
+            display: grid;
+
+            gap: 8px;
+        }
+
+
+        .reason-list li {
+
+            position: relative;
+
+            padding-left: 18px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+
+        .reason-list li::before {
+
+            content: "•";
+
+            position: absolute;
+
+            left: 3px;
+
+            color: var(--danger);
+
+            font-size: 17px;
+        }
+
+
+        .recommendation {
+
+            border-left:
+                3px solid var(--primary);
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           WHY SECTION
+        ========================================================= */
+
+        .cards-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+
+        .feature-card {
+
+            padding: 28px;
+
+            border-radius: var(--radius-md);
+
+            box-shadow: var(--raised-small);
+
+            transition: var(--transition);
+        }
+
+
+        .feature-card:hover {
+
+            transform: translateY(-8px);
+
+            box-shadow: var(--raised);
+        }
+
+
+        .feature-number {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 14px;
+
+            display: grid;
+
+            place-items: center;
+
+            color: var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            box-shadow: var(--inset);
+
+            margin-bottom: 23px;
+        }
+
+
+        .feature-card h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .feature-card p {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.75;
+        }
+
+
+        /* =========================================================
+           TWO COLUMN EXPLANATION
+        ========================================================= */
+
+        .comparison {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+        }
+
+
+        .comparison-card {
+
+            padding: 32px;
+
+            border-radius: var(--radius-lg);
+
+            box-shadow: var(--raised-small);
+        }
+
+
+        .comparison-card.highlight {
+
+            box-shadow: var(--raised);
+
+            border:
+                1px solid rgba(23,105,224,.08);
+        }
+
+
+        .comparison-card h3 {
+
+            font-size: 19px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .comparison-card p {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+            margin-bottom: 22px;
+        }
+
+
+        .comparison-list {
+
+            display: grid;
+
+            gap: 12px;
+
+            list-style: none;
+        }
+
+
+        .comparison-list li {
+
+            display: flex;
+
+            gap: 10px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        .list-icon {
+
+            width: 22px;
+            height: 22px;
+
+            flex-shrink: 0;
+
+            border-radius: 7px;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 10px;
+
+            color: var(--primary);
+
+            box-shadow: var(--inset);
+        }
+
+
+        /* =========================================================
+           WORKFLOW
+        ========================================================= */
+
+        .workflow {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+
+            position: relative;
+        }
+
+
+        .workflow-card {
+
+            padding: 25px 21px;
+
+            border-radius: 20px;
+
+            box-shadow: var(--raised-small);
+
+            position: relative;
+
+            transition: var(--transition);
+        }
+
+
+        .workflow-card:hover {
+
+            transform: translateY(-7px);
+        }
+
+
+        .workflow-card::after {
+
+            content: "→";
+
+            position: absolute;
+
+            right: -17px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 32px;
+            height: 32px;
+
+            border-radius: 50%;
+
+            display: grid;
+
+            place-items: center;
+
+            background: var(--bg);
+
+            box-shadow: var(--raised-small);
+
+            color: var(--primary);
+
+            z-index: 2;
+        }
+
+
+        .workflow-card:last-child::after {
+            display: none;
+        }
+
+
+        .workflow-icon {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 14px;
+
+            display: grid;
+
+            place-items: center;
+
+            color: var(--primary);
+
+            box-shadow: var(--inset);
+
+            margin-bottom: 20px;
+        }
+
+
+        .workflow-card h3 {
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .workflow-card p {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           CTA
+        ========================================================= */
+
+        .cta {
+
+            margin:
+                40px 7vw
+                100px;
+
+            padding:
+                65px;
+
+            border-radius: 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dfeaf5,
+                    #edf4fa
+                );
+
+            box-shadow: var(--raised);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .cta::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            right: -100px;
+            top: -120px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(23,105,224,.16),
+                    transparent 70%
+                );
+        }
+
+
+        .cta-content {
+
+            max-width: 690px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .cta h2 {
+
+            font-size:
+                clamp(30px, 4vw, 50px);
+
+            line-height: 1.1;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .cta p {
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+
+            padding:
+                45px 7vw;
+
+            border-top:
+                1px solid rgba(163,177,198,.25);
+        }
+
+
+        .footer-inner {
+
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .footer-brand {
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+
+        .footer-brand strong {
+
+            color: var(--text);
+
+            font-size: 14px;
+
+            margin-right: 7px;
+        }
+
+
+        .footer-links {
+
+            display: flex;
+
+            gap: 17px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .footer-links a {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            transition: var(--transition);
+        }
+
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+
+        /* =========================================================
+           REVEAL ANIMATION
+        ========================================================= */
+
+        .reveal {
+
+            opacity: 0;
+
+            transform: translateY(28px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+
+        .reveal.visible {
+
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           ANIMATIONS
+        ========================================================= */
+
+        @keyframes pulse {
+
+            0%,100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.35);
+                opacity: .65;
+            }
+        }
+
+
+        @keyframes floating {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+
+        @keyframes chipFloat {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        @keyframes resultIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .hero {
+
+                grid-template-columns: 1fr;
+
+                text-align: center;
+
+                padding-top: 145px;
+            }
+
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+
+            .hero-visual {
+                min-height: 420px;
+            }
+
+
+            .analyzer-wrapper {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .analyzer-intro {
+                text-align: center;
+            }
+
+
+            .context-list {
+                max-width: 500px;
+                margin: auto;
+                text-align: left;
+            }
+
+
+            .cards-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .workflow {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .workflow-card::after {
+                display: none;
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+
+                display: none;
+
+                position: absolute;
+
+                top: 72px;
+
+                left: 0;
+                right: 0;
+
+                padding: 15px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                background: rgba(233,240,247,.97);
+
+                border-radius: 18px;
+
+                box-shadow: var(--raised-small);
+            }
+
+
+            .nav-links.open {
+                display: flex;
+            }
+
+
+            .nav-links a {
+                text-align: center;
+            }
+
+
+            .menu-button {
+                display: grid;
+                place-items: center;
+            }
+
+
+            .hero h1 {
+                letter-spacing: -2.5px;
+            }
+
+
+            .comparison {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .cards-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .footer-inner {
+
+                flex-direction: column;
+
+                text-align: center;
+            }
+        }
+
+
+        @media (max-width: 560px) {
+
+            .navbar {
+
+                top: 10px;
+
+                width:
+                    calc(100% - 20px);
+            }
+
+
+            .brand-text span {
+                display: none;
+            }
+
+
+            .hero {
+
+                padding:
+                    125px 20px
+                    60px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 42px;
+
+                letter-spacing: -2px;
+            }
+
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+
+            .hero-visual {
+                min-height: 350px;
+            }
+
+
+            .security-orbit {
+                width: 320px;
+            }
+
+
+            .shield-core {
+
+                width: 130px;
+                height: 130px;
+
+                font-size: 52px;
+            }
+
+
+            .chip-one {
+                left: 0;
+            }
+
+
+            .chip-two {
+                right: 0;
+            }
+
+
+            .section,
+            .analyzer-section {
+
+                padding:
+                    75px 20px;
+            }
+
+
+            .analyzer-intro,
+            .analyzer-card {
+
+                padding: 23px;
+            }
+
+
+            .analyzer-intro h2 {
+                font-size: 31px;
+            }
+
+
+            .input-row {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .result-stats {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .cta {
+
+                margin:
+                    20px 20px
+                    70px;
+
+                padding: 35px 25px;
+            }
+
+
+            .cta h2 {
+                font-size: 32px;
+            }
+
+
+            .workflow {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================== -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="brand">
+
+            <div class="brand-logo">
+                U
+            </div>
+
+            <div class="brand-text">
+
+                <strong>UPI-Shield</strong>
+
+                <span>
+                    Contextual Payment Security
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="index.html"
+               class="active">
+                Home
+            </a>
+
+            <a href="problem.html">
+                Problem
+            </a>
+
+            <a href="threat-demo.html">
+                Threat Demo
+            </a>
+
+            <a href="how-it-works.html">
+                How It Works
+            </a>
+
+            <a href="security.html">
+                Security
+            </a>
+
+            <a href="protect.html"
+               class="nav-cta">
+                Protect Payment
+            </a>
+
+        </div>
+
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Open navigation">
+
+            ☰
+
+        </button>
+
+    </nav>
+
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content reveal">
+
+                <div class="eyebrow">
+
+                    <span class="eyebrow-dot"></span>
+
+                    Contextual Digital Payment Security
+
+                </div>
+
+
+                <h1>
+
+                    The user can be real.
+
+                    <span>
+                        The payment can still be a scam.
+                    </span>
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    UPI-Shield analyzes the context surrounding a
+                    payment request to detect urgency, threats,
+                    impersonation, coercion and suspicious payment
+                    patterns before the user authorizes a transaction.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a
+                        href="#analyzer"
+                        class="primary-button">
+
+                        Analyze a Message
+                        <span>→</span>
+
+                    </a>
+
+
+                    <a
+                        href="threat-demo.html"
+                        class="secondary-button">
+
+                        Explore Threat Demo
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual reveal">
+
+                <div class="security-orbit">
+
+                    <div class="shield-core">
+                        🛡
+                    </div>
+
+
+                    <div class="orbit-chip chip-one">
+                        ⚠ Urgency
+                    </div>
+
+
+                    <div class="orbit-chip chip-two">
+                        ✓ Authentication
+                    </div>
+
+
+                    <div class="orbit-chip chip-three">
+                        ⌁ Context
+                    </div>
+
+
+                    <div class="orbit-chip chip-four">
+                        ! Threat
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             TEXT ANALYZER
+        ====================================================== -->
+
+        <section
+            class="analyzer-section"
+            id="analyzer">
+
+            <div class="analyzer-wrapper">
+
+
+                <!-- INTRO -->
+
+                <div class="analyzer-intro reveal">
+
+                    <span class="section-label">
+                        Live Text Analysis
+                    </span>
+
+
+                    <h2>
+
+                        Give UPI-Shield
+                        <span>the context.</span>
+
+                    </h2>
+
+
+                    <p>
+
+                        Paste the suspicious message or payment
+                        request below. UPI-Shield will analyze the
+                        text for contextual scam and coercion signals.
+
+                    </p>
+
+
+                    <div class="context-list">
+
+                        <div class="context-item">
+
+                            <div class="context-icon">
+                                !
+                            </div>
+
+                            Urgency and pressure
+
+                        </div>
+
+
+                        <div class="context-item">
+
+                            <div class="context-icon">
+                                ⚠
+                            </div>
+
+                            Threatening language
+
+                        </div>
+
+
+                        <div class="context-item">
+
+                            <div class="context-icon">
+                                ◉
+                            </div>
+
+                            Impersonation signals
+
+                        </div>
+
+
+                        <div class="context-item">
+
+                            <div class="context-icon">
+                                ₹
+                            </div>
+
+                            Payment requests
+
+                        </div>
+
+
+                        <div class="context-item">
+
+                            <div class="context-icon">
+                                ✓
+                            </div>
+
+                            Verification bypass attempts
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ANALYZER -->
+
+                <div class="analyzer-card reveal">
+
+                    <div class="analyzer-card-header">
+
+                        <h3>
+                            Message Context Analyzer
+                        </h3>
+
+
+                        <div class="live-status">
+
+                            <span class="live-dot"></span>
+
+                            Backend Connected
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="input-group">
+
+                        <div class="input-label-row">
+
+                            <label
+                                class="input-label"
+                                for="messageInput">
+
+                                Suspicious Message
+
+                            </label>
+
+                            <span class="optional">
+                                Required
+                            </span>
+
+                        </div>
+
+
+                        <textarea
+                            id="messageInput"
+                            maxlength="5000"
+                            placeholder="Paste the SMS, WhatsApp message, email, or payment request here...
+
+Example:
+URGENT! Your electricity connection will be disconnected today. Pay ₹2500 immediately to electricity.verify@upi to avoid disconnection."
+                        ></textarea>
+
+
+                        <div class="character-row">
+
+                            <span>
+                                Text information only
+                            </span>
+
+                            <span id="characterCount">
+                                0 / 5000
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OPTIONAL INFORMATION -->
+
+                    <div class="input-row">
+
+
+                        <div class="input-group">
+
+                            <div class="input-label-row">
+
+                                <label
+                                    class="input-label"
+                                    for="amountInput">
+
+                                    Payment Amount
+
+                                </label>
+
+                                <span class="optional">
+                                    Optional
+                                </span>
+
+                            </div>
+
+
+                            <input
+                                class="text-input"
+                                id="amountInput"
+                                type="number"
+                                min="0"
+                                placeholder="e.g. 2500"
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <div class="input-label-row">
+
+                                <label
+                                    class="input-label"
+                                    for="recipientInput">
+
+                                    Recipient / UPI ID
+
+                                </label>
+
+                                <span class="optional">
+                                    Optional
+                                </span>
+
+                            </div>
+
+
+                            <input
+                                class="text-input"
+                                id="recipientInput"
+                                type="text"
+                                maxlength="120"
+                                placeholder="example@upi"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ANALYZE -->
+
+                    <button
+                        class="analyze-button"
+                        id="analyzeButton">
+
+                        Analyze Context
+
+                    </button>
+
+
+                    <!-- LOADER -->
+
+                    <div
+                        class="analysis-loader hidden"
+                        id="analysisLoader">
+
+                        <div class="spinner"></div>
+
+                        UPI-Shield is analyzing the message...
+
+                    </div>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        class="analysis-result hidden"
+                        id="analysisResult">
+
+
+                        <div class="risk-top">
+
+                            <div>
+
+                                <span class="risk-label">
+                                    Contextual Risk Level
+                                </span>
+
+                                <h3 id="riskLevel">
+                                    —
+                                </h3>
+
+                            </div>
+
+
+                            <div class="score">
+
+                                <strong id="riskScore">
+                                    0
+                                </strong>
+
+                                <span>
+                                    /100
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="risk-bar">
+
+                            <div
+                                class="risk-fill"
+                                id="riskProgress">
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-stats">
+
+
+                            <div class="result-stat">
+
+                                <span>
+                                    Confidence
+                                </span>
+
+                                <strong
+                                    id="confidenceValue">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="result-stat">
+
+                                <span>
+                                    Context
+                                </span>
+
+                                <strong
+                                    id="contextStatus">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="result-stat">
+
+                                <span>
+                                    Authentication
+                                </span>
+
+                                <strong
+                                    id="authenticationStatus">
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-block">
+
+                            <h4>
+                                Why is this risky?
+                            </h4>
+
+
+                            <ul
+                                class="reason-list"
+                                id="reasonList">
+                            </ul>
+
+                        </div>
+
+
+                        <div
+                            class="result-block recommendation">
+
+                            <h4>
+                                Recommended Action
+                            </h4>
+
+
+                            <p id="recommendedAction">
+                                —
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             WHY UPI SHIELD
+        ====================================================== -->
+
+        <section class="section">
+
+            <div class="section-header reveal">
+
+                <span class="section-label">
+                    Why UPI-Shield
+                </span>
+
+
+                <h2 class="section-title">
+
+                    Authentication answers
+                    <span>"who?"</span>
+
+                    Context answers
+                    <span>"why?"</span>
+
+                </h2>
+
+
+                <p class="section-description">
+
+                    A legitimate user can unknowingly authorize a
+                    fraudulent payment. UPI-Shield adds contextual
+                    intelligence to the decision-making process.
+
+                </p>
+
+            </div>
+
+
+            <div class="cards-grid">
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Detect psychological pressure
+                    </h3>
+
+                    <p>
+                        Identify urgency, fear, threats and
+                        authority pressure that can manipulate
+                        users into making rushed payments.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Understand payment context
+                    </h3>
+
+                    <p>
+                        Connect the payment request with the
+                        surrounding message instead of treating
+                        the transaction as an isolated event.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Explain before intervening
+                    </h3>
+
+                    <p>
+                        Show users why a payment appears risky so
+                        they can make a more informed decision.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             2FA COMPARISON
+        ====================================================== -->
+
+        <section class="section">
+
+            <div class="section-header reveal">
+
+                <span class="section-label">
+                    The Security Gap
+                </span>
+
+
+                <h2 class="section-title">
+
+                    Being authenticated
+                    doesn't mean being <span>safe.</span>
+
+                </h2>
+
+            </div>
+
+
+            <div class="comparison">
+
+
+                <div class="comparison-card reveal">
+
+                    <h3>
+                        Traditional Authentication
+                    </h3>
+
+
+                    <p>
+                        Traditional security mechanisms primarily
+                        determine whether the correct person is
+                        authorizing a transaction.
+                    </p>
+
+
+                    <ul class="comparison-list">
+
+                        <li>
+
+                            <span class="list-icon">
+                                ✓
+                            </span>
+
+                            Confirms user identity
+
+                        </li>
+
+
+                        <li>
+
+                            <span class="list-icon">
+                                ✓
+                            </span>
+
+                            Validates authentication factor
+
+                        </li>
+
+
+                        <li>
+
+                            <span class="list-icon">
+                                ?
+                            </span>
+
+                            Doesn't understand the surrounding message
+
+                        </li>
+
+
+                        <li>
+
+                            <span class="list-icon">
+                                ?
+                            </span>
+
+                            Doesn't detect psychological coercion
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="comparison-card highlight reveal">
+
+                    <h3>
+                        UPI-Shield Contextual Layer
+                    </h3>
+
+
+                    <p>
+                        UPI-Shield adds an intelligence layer that
+                        evaluates the circumstances surrounding the
+                        payment.
+                    </p>
+
+
+                    <ul class="comparison-list">
+
+                        <li>
+
+                            <span class="list-icon">
+                                ✓
+                            </span>
+
+                            Analyzes message context
+
+                        </li>
+
+
+                        <li>
+
+                            <span class="list-icon">
+                                ✓
+                            </span>
+
+                            Detects urgency and threats
+
+                        </li>
+
+
+                        <li>
+
+                            <span class="list-icon">
+                                ✓
+                            </span>
+
+                            Detects impersonation
+
+                        </li>
+
+
+                        <li>
+
+                            <span class="list-icon">
+                                ✓
+                            </span>
+
+                            Explains contextual risk
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             WORKFLOW
+        ====================================================== -->
+
+        <section class="section">
+
+            <div class="section-header reveal">
+
+                <span class="section-label">
+                    System Workflow
+                </span>
+
+
+                <h2 class="section-title">
+
+                    From message
+                    to a <span>safer decision.</span>
+
+                </h2>
+
+            </div>
+
+
+            <div class="workflow">
+
+
+                <div class="workflow-card reveal">
+
+                    <div class="workflow-icon">
+                        01
+                    </div>
+
+                    <h3>
+                        User Context
+                    </h3>
+
+                    <p>
+                        The user provides the suspicious payment
+                        message and optional transaction details.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card reveal">
+
+                    <div class="workflow-icon">
+                        02
+                    </div>
+
+                    <h3>
+                        Context Analysis
+                    </h3>
+
+                    <p>
+                        The backend analyzes the message for
+                        contextual threat indicators.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card reveal">
+
+                    <div class="workflow-icon">
+                        03
+                    </div>
+
+                    <h3>
+                        Risk Scoring
+                    </h3>
+
+                    <p>
+                        Multiple signals are combined into a
+                        contextual risk score.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card reveal">
+
+                    <div class="workflow-icon">
+                        04
+                    </div>
+
+                    <h3>
+                        User Decision
+                    </h3>
+
+                    <p>
+                        UPI-Shield explains the risk and recommends
+                        an appropriate next action.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CTA
+        ====================================================== -->
+
+        <section class="cta reveal">
+
+            <div class="cta-content">
+
+                <span class="section-label">
+                    Test UPI-Shield
+                </span>
+
+
+                <h2>
+                    Don't let urgency make the decision for you.
+                </h2>
+
+
+                <p>
+                    Paste a suspicious payment message and let
+                    UPI-Shield analyze the context behind it.
+                </p>
+
+
+                <a
+                    href="#analyzer"
+                    class="primary-button">
+
+                    Analyze a Message
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+
+                <strong>
+                    UPI-Shield
+                </strong>
+
+                Contextual Payment Security
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="problem.html">
+                    Problem
+                </a>
+
+                <a href="threat-demo.html">
+                    Threat Demo
+                </a>
+
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
+
+                <a href="security.html">
+                    Security
+                </a>
+
+                <a href="protect.html">
+                    Protect Payment
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =========================================================
+           MOBILE NAVIGATION
+        ========================================================= */
+
+        const menuButton =
+            document.getElementById("menuButton");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+
+        menuButton.addEventListener(
+            "click",
+            () => {
+
+                navLinks.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(".nav-links a")
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        navLinks.classList.remove(
+                            "open"
+                        );
+
+                    }
+                );
+
+            });
+
+
+
+        /* =========================================================
+           CHARACTER COUNTER
+        ========================================================== */
+
+        const messageInput =
+            document.getElementById(
+                "messageInput"
+            );
+
+        const characterCount =
+            document.getElementById(
+                "characterCount"
+            );
+
+
+        messageInput.addEventListener(
+            "input",
+            () => {
+
+                characterCount.textContent =
+                    `${messageInput.value.length} / 5000`;
+
+            }
+        );
+
+
+
+        /* =========================================================
+           API CONFIGURATION
+        ========================================================== */
+
+        const API_BASE_URL =
+            "http://127.0.0.1:5000";
+
+
+
+        /* =========================================================
+           ANALYZE MESSAGE
+        ========================================================== */
+
+        const analyzeButton =
+            document.getElementById(
+                "analyzeButton"
+            );
+
+        const analysisLoader =
+            document.getElementById(
+                "analysisLoader"
+            );
+
+        const analysisResult =
+            document.getElementById(
+                "analysisResult"
+            );
+
+
+        analyzeButton.addEventListener(
+            "click",
+            analyzeMessage
+        );
+
+
+        async function analyzeMessage() {
+
+            const message =
+                messageInput.value.trim();
+
+
+            const amountValue =
+                document
+                    .getElementById(
+                        "amountInput"
+                    )
+                    .value;
+
+
+            const recipient =
+                document
+                    .getElementById(
+                        "recipientInput"
+                    )
+                    .value
+                    .trim();
+
+
+            /* -----------------------------------------
+               VALIDATION
+            ----------------------------------------- */
+
+            if (!message) {
+
+                showError(
+                    "Please paste a suspicious message before analyzing it."
+                );
+
+                messageInput.focus();
+
+                return;
+            }
+
+
+            if (message.length < 5) {
+
+                showError(
+                    "Please provide a little more context for the analysis."
+                );
+
+                messageInput.focus();
+
+                return;
+            }
+
+
+            let amount = null;
+
+
+            if (amountValue !== "") {
+
+                amount =
+                    Number(amountValue);
+
+
+                if (
+                    !Number.isFinite(amount) ||
+                    amount < 0
+                ) {
+
+                    showError(
+                        "Please enter a valid payment amount."
+                    );
+
+                    return;
+                }
+
+            }
+
+
+            /* -----------------------------------------
+               UI STATE
+            ----------------------------------------- */
+
+            analyzeButton.disabled = true;
+
+            analysisResult.classList.add(
+                "hidden"
+            );
+
+            analysisLoader.classList.remove(
+                "hidden"
+            );
+
+
+            try {
+
+                /* -------------------------------------
+                   SEND DATA TO PYTHON
+                ------------------------------------- */
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/api/analyze`,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    message:
+                                        message,
+
+                                    amount:
+                                        amount,
+
+                                    recipient:
+                                        recipient ||
+                                        null,
+
+                                    source:
+                                        "index.html"
+
+                                })
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !result.success
+                ) {
+
+                    throw new Error(
+                        result.message ||
+                        "Backend analysis failed."
+                    );
+
+                }
+
+
+                /* -------------------------------------
+                   DISPLAY RESULT
+                ------------------------------------- */
+
+                displayAnalysis(
+                    result.data
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "UPI-Shield API Error:",
+                    error
+                );
+
+
+                showError(
+                    "Unable to connect to the UPI-Shield backend. Make sure 'python app.py' is running on port 5000."
+                );
+
+
+            } finally {
+
+                analyzeButton.disabled =
+                    false;
+
+                analysisLoader.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================================================
+           DISPLAY ANALYSIS
+        ========================================================== */
+
+        function displayAnalysis(data) {
+
+            const riskLevel =
+                document.getElementById(
+                    "riskLevel"
+                );
+
+
+            const riskScore =
+                document.getElementById(
+                    "riskScore"
+                );
+
+
+            const confidence =
+                document.getElementById(
+                    "confidenceValue"
+                );
+
+
+            const contextStatus =
+                document.getElementById(
+                    "contextStatus"
+                );
+
+
+            const authenticationStatus =
+                document.getElementById(
+                    "authenticationStatus"
+                );
+
+
+            const progress =
+                document.getElementById(
+                    "riskProgress"
+                );
+
+
+            const reasonList =
+                document.getElementById(
+                    "reasonList"
+                );
+
+
+            const recommendation =
+                document.getElementById(
+                    "recommendedAction"
+                );
+
+
+            /* -----------------------------------------
+               RISK
+            ----------------------------------------- */
+
+            riskLevel.textContent =
+                data.risk_level || "UNKNOWN";
+
+
+            riskScore.textContent =
+                Number(data.risk_score || 0);
+
+
+            confidence.textContent =
+                `${data.confidence || 0}%`;
+
+
+            contextStatus.textContent =
+                data.context_status ||
+                "UNKNOWN";
+
+
+            authenticationStatus.textContent =
+                data.authentication_status ||
+                "UNKNOWN";
+
+
+            /* -----------------------------------------
+               PROGRESS
+            ----------------------------------------- */
+
+            requestAnimationFrame(
+                () => {
+
+                    progress.style.width =
+                        `${Number(data.risk_score || 0)}%`;
+
+                }
+            );
+
+
+            /* -----------------------------------------
+               RISK COLOR
+            ----------------------------------------- */
+
+            const level =
+                String(
+                    data.risk_level || ""
+                ).toUpperCase();
+
+
+            if (level === "CRITICAL") {
+
+                riskLevel.style.color =
+                    "var(--danger)";
+
+            } else if (level === "HIGH") {
+
+                riskLevel.style.color =
+                    "var(--danger)";
+
+            } else if (level === "MEDIUM") {
+
+                riskLevel.style.color =
+                    "var(--warning)";
+
+            } else {
+
+                riskLevel.style.color =
+                    "var(--success)";
+
+            }
+
+
+            /* -----------------------------------------
+               REASONS
+            ----------------------------------------- */
+
+            reasonList.innerHTML = "";
+
+
+            const reasons =
+                Array.isArray(data.reasons)
+                    ? data.reasons
+                    : [];
+
+
+            if (reasons.length === 0) {
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+                li.textContent =
+                    "No specific contextual reasons were returned.";
+
+                reasonList.appendChild(li);
+
+            } else {
+
+                reasons.forEach(
+                    reason => {
+
+                        const li =
+                            document.createElement(
+                                "li"
+                            );
+
+                        li.textContent =
+                            reason;
+
+                        reasonList.appendChild(
+                            li
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* -----------------------------------------
+               RECOMMENDATION
+            ----------------------------------------- */
+
+            recommendation.textContent =
+                data.recommended_action ||
+                "Review the payment carefully before authorizing it.";
+
+
+            /* -----------------------------------------
+               SHOW RESULT
+            ----------------------------------------- */
+
+            analysisResult.classList.remove(
+                "hidden"
+            );
+
+
+            setTimeout(
+                () => {
+
+                    analysisResult.scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest"
+                    });
+
+                },
+                100
+            );
+
+        }
+
+
+
+        /* =========================================================
+           ERROR MESSAGE
+        ========================================================== */
+
+        function showError(message) {
+
+            alert(
+                message
+            );
+
+        }
+
+
+
+        /* =========================================================
+           SCROLL REVEAL
+        ========================================================== */
+
+        const revealElements =
+            document.querySelectorAll(
+                ".reveal"
+            );
+
+
+        const revealObserver =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(
+                        entry => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target.classList.add(
+                                    "visible"
+                                );
+
+                                revealObserver.unobserve(
+                                    entry.target
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        revealElements.forEach(
+            element => {
+
+                revealObserver.observe(
+                    element
+                );
+
+            }
+        );
+
+
+
+        /* =========================================================
+           SMOOTH INTERNAL LINKS
+        ========================================================== */
+
+        document
+            .querySelectorAll(
+                'a[href^="#"]'
+            )
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    event => {
+
+                        const target =
+                            document.querySelector(
+                                link.getAttribute("href")
+                            );
+
+
+                        if (!target) {
+                            return;
+                        }
+
+
+                        event.preventDefault();
+
+
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+                );
+
+            });
+
+    </script>
+
+</body>
+
+</html>
